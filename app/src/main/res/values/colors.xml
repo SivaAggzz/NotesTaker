@@ -74,35 +74,6 @@
     <color name="disabled_text_color_for_dark_theme">#414141</color>
 
 
-    <color name="intro_page_one">#673ab7</color>
-    <color name="intro_page_two">#33d588</color>
-    <color name="intro_page_three">#e91e63</color>
-    <color name="intro_page_four">#ff5e4f</color>
-    <color name="intro_page_five">#179be5</color>
-    <color name="intro_page_six">#0d47a1</color>
-    <color name="intro_page_seven">#ffab00</color>
-    <color name="intro_page_eight">#00838F</color>
-    <color name="intro_page_nine">#179be5</color>
-    <color name="intro_page_ten">#90a4ae</color>
-
-
-    <!--filePath type colors-->
-
-    <color name="otherfilebg">#ff607d8b</color>
-    <color name="android_icon_bg">#8ead2e</color>
-    <color name="imagebg">#4db6ac</color>
-    <color name="videobg">#0091EA</color>
-    <color name="audiobg">#f06292</color>
-    <color name="wordbg">#2b5796</color>
-    <color name="adobe_color">#ff0000</color>
-    <color name="powerpoint_color">#f1592a</color>
-    <color name="excelbg">#1f6e42</color>
-    <color name="txtbg">#8478ba</color>
-    <color name="archivebg">#d4965a</color>
-    <color name="programbg">#0091EA</color>
-    <color name="javabg">#e76f00</color>
-
-
     <color name="seekbar_background_color_normal">#11000000</color>
     <color name="seekbar_background_color_dark">#ffeeeeee</color>
     <color name="window_dark_bg_color">#202020</color>
