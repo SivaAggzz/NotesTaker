@@ -45,7 +45,7 @@ public class AddNewNoteActivity extends AppCompatActivity {
     private void initUI() {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Add new note");
+        getSupportActionBar().setTitle(getResources().getString(R.string.add_new_note));
         activityAddNewNoteBinding.titleEditTextLayout.setHintAnimationEnabled(false);
         activityAddNewNoteBinding.contentEditTextLayout.setHintAnimationEnabled(false);
 

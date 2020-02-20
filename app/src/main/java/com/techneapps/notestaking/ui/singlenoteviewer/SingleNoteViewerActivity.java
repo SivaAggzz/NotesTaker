@@ -23,7 +23,7 @@ public class SingleNoteViewerActivity extends AppCompatActivity {
         activitySingleNotesViewerBinding.setNote(getIncomingNote());
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Saved note");
+        getSupportActionBar().setTitle(getResources().getString(R.string.saved_note));
     }
 
     @Override

@@ -58,7 +58,7 @@ public class AllNotesViewerActivity extends AppCompatActivity {
             return;
         }
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Tap again to exit", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getResources().getString(R.string.tap_again_to_exit), Toast.LENGTH_SHORT).show();
         handler.postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
     }
 }

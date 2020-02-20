@@ -3,4 +3,7 @@
     <string name="title">Title</string>
     <string name="note">Note</string>
     <string name="date">Date</string>
+    <string name="saved_note">Saved note</string>
+    <string name="tap_again_to_exit">Tap again to exit</string>
+    <string name="add_new_note">Add new note</string>
 </resources>
