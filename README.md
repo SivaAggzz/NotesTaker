@@ -11,6 +11,7 @@ No setup is required in order to use NotesTaker. Just Install the application an
 - Validation while adding new note
 - Edit saved note
 - Delete saved note
+- Clear all saved notes in one tap
 - Followed Material design standards
 - LiveData and DataBinding Methods used (Jetpack)
 - No boilerplate code
@@ -24,6 +25,7 @@ No setup is required in order to use NotesTaker. Just Install the application an
 - Validation while adding new note
 - Edit saved note
 - Delete saved note
+- Clear all saved notes in one tap
 - Followed Material design standards
 - LiveData and DataBinding Methods used (Jetpack)
 - No boilerplate code
