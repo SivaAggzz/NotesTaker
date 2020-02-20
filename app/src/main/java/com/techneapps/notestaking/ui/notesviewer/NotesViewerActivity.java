@@ -5,21 +5,33 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.techneapps.notestaking.R;
+import com.techneapps.notestaking.databinding.ActivityNotesViewerBinding;
+import com.techneapps.notestaking.ui.adapter.NotesAdapter;
 
 public class NotesViewerActivity extends AppCompatActivity {
 
+    private NotesViewerModel notesViewerModel;
+    private ActivityNotesViewerBinding activityNotesViewerBinding;
+
+    private NotesAdapter notesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notes_viewer);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        activityNotesViewerBinding = DataBindingUtil.setContentView(this, R.layout.activity_notes_viewer);
+        setSupportActionBar(activityNotesViewerBinding.toolbar);
+        notesViewerModel = ViewModelProviders.of(this).get(NotesViewerModel.class);
 
-
+        notesViewerModel.getNoteObjects().observe(this, noteObjs -> {
+            activityNotesViewerBinding.notesRecyclerView.setLayoutManager(new LinearLayoutManager(NotesViewerActivity.this));
+            notesAdapter = new NotesAdapter(NotesViewerActivity.this, noteObjs);
+            activityNotesViewerBinding.notesRecyclerView.setAdapter(notesAdapter);
+        });
     }
 
     @Override
