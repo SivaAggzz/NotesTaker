@@ -6,10 +6,11 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.Room;
 
-import com.techneapps.notestaking.data.NoteObj;
+import com.techneapps.notestaking.data.dao.notes.NoteObj;
+import com.techneapps.notestaking.data.dao.notes.NotesDatabase;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import io.reactivex.Observable;
@@ -18,30 +19,30 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class NotesViewerModel extends AndroidViewModel {
-    public ArrayList<NoteObj> getNotes
     private Context context;
     private MutableLiveData<ArrayList<NoteObj>> noteObjects;
-
-    {
-        if (noteObjects == null) {
-            noteObjects = new ArrayList<>();
-        }
-    }
+    private NotesDatabase notesDatabase;
 
     public NotesViewerModel(@NonNull Application application) {
         super(application);
         this.context = application.getApplicationContext();
     }
 
-    private MutableLiveData<ArrayList<NoteObj>> getAllSavedNotesThread(File dirPath) {
+    public MutableLiveData<ArrayList<NoteObj>> getNoteObjects() {
+        if (noteObjects == null) {
+            noteObjects = new MutableLiveData<>();
+        }
+        return getAllSavedNotesThread();
+    }
 
 
+    private MutableLiveData<ArrayList<NoteObj>> getAllSavedNotesThread() {
+        notesDatabase = Room.databaseBuilder(context, NotesDatabase.class, "notes.db").build();
         CompositeDisposable compositeDisposable = new CompositeDisposable();
-        compositeDisposable.add(Observable.fromCallable(() -> {
-            return noteObjects;
-        }).subscribeOn(Schedulers.io())
+        compositeDisposable.add(Observable.fromCallable(() -> notesDatabase.getNotesDao().getNotes())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((result) ->));
+                .subscribe((result) -> noteObjects.setValue(new ArrayList<>(result))));
         return noteObjects;
     }
 
