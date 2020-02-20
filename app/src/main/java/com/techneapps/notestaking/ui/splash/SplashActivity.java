@@ -12,7 +12,9 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //layout is loaded by styles
 
+        //load the first activity to start after splash screen
         Intent intent = new Intent(this, AllNotesViewerActivity.class);
         startActivity(intent);
         finish();

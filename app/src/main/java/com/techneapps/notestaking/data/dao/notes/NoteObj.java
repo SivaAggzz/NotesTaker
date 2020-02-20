@@ -3,6 +3,7 @@ package com.techneapps.notestaking.data.dao.notes;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
@@ -23,9 +24,16 @@ public class NoteObj implements Parcelable {
     };
 
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "note_id")
     private long id;
+
+    @ColumnInfo(name = "note_title")
     private String title;
+
+    @ColumnInfo(name = "note_content")
     private String content;
+
+    @ColumnInfo(name = "note_time_stamp")
     private long timeStamp;
 
     @Ignore

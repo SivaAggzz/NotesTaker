@@ -27,6 +27,7 @@ public class AddNewNoteModel extends AndroidViewModel {
     }
 
 
+    //method to save note to Room database by using RXJava
     void saveNote(NoteObj noteObj, OnNoteSavedListener onNoteSavedListener) {
         notesDatabase = Room.databaseBuilder(context, NotesDatabase.class, "notes.db").build();
         CompositeDisposable compositeDisposable = new CompositeDisposable();

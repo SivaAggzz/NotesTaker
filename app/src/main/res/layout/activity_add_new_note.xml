@@ -37,7 +37,7 @@
                     android:maxLines="1"
                     android:padding="16sp"
                     android:textColor="@color/md_white_1000"
-                    android:textColorHint="@color/md_grey_300"
+                    android:textColorHint="@color/md_grey_500"
                     app:hintEnabled="false" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -62,10 +62,10 @@
                     android:hint="@string/note"
                     android:imeOptions="actionDone"
                     android:importantForAutofill="no"
-                    android:inputType="text|textCapSentences"
+                    android:inputType="textMultiLine|textCapSentences"
                     android:padding="16sp"
                     android:textColor="@color/md_white_1000"
-                    android:textColorHint="@color/md_grey_300"
+                    android:textColorHint="@color/md_grey_500"
                     android:textSize="16sp"
                     app:hintEnabled="false" />
             </com.google.android.material.textfield.TextInputLayout>

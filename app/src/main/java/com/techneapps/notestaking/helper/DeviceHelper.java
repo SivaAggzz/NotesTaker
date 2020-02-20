@@ -12,7 +12,6 @@ public class DeviceHelper {
         Vibrator vibrator = (Vibrator) view.getContext().getSystemService(Context.VIBRATOR_SERVICE);
         if (vibrator == null) {
             // some manufacturers do not vibrate on long press
-            // might as well make this a fallback method
             view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vibrator.vibrate(VibrationEffect.createOneShot(50, 80));

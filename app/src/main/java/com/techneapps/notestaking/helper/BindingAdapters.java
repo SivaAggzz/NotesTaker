@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 public class BindingAdapters {
+    //BindingAdapters are data binding methods used by views to show data
+
     @BindingAdapter(value = "timeStamp")
     public static void setNoteDate(TextView textView, long timeStamp) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM YYYY, hh:mm a", Locale.getDefault());

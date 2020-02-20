@@ -28,6 +28,7 @@ public class SingleNoteViewerActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        //if the back button in toolbar is Selected
         if (item.getItemId() == android.R.id.home) {
             finish();
         }

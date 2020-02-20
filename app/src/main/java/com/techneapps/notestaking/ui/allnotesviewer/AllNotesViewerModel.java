@@ -36,6 +36,7 @@ public class AllNotesViewerModel extends AndroidViewModel {
     }
 
 
+    //method to get saved note from Room database by using RXJava
     private MutableLiveData<ArrayList<NoteObj>> getAllSavedNotesThread() {
         notesDatabase = Room.databaseBuilder(context, NotesDatabase.class, "notes.db").build();
         CompositeDisposable compositeDisposable = new CompositeDisposable();

@@ -35,6 +35,7 @@ public class AddNewNoteActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        //if the back button in toolbar is Selected
         if (item.getItemId() == android.R.id.home) {
             finish();
         }
@@ -48,6 +49,7 @@ public class AddNewNoteActivity extends AppCompatActivity {
         activityAddNewNoteBinding.titleEditTextLayout.setHintAnimationEnabled(false);
         activityAddNewNoteBinding.contentEditTextLayout.setHintAnimationEnabled(false);
 
+        //requestFocus to show cursor blinking in this particular view
         activityAddNewNoteBinding.contentEditTextLayout.requestFocus();
     }
 
@@ -73,6 +75,9 @@ public class AddNewNoteActivity extends AppCompatActivity {
     }
 
     private boolean validateFields() {
+        //returns boolean value according to the result found while validating
+
+        //validate title edit text
         if (TextUtils.isEmpty(activityAddNewNoteBinding.titleEditText.getText().toString().trim())) {
             activityAddNewNoteBinding.titleEditTextLayout.setError("Enter Title text!");
             DeviceHelper.vibrateDevice(activityAddNewNoteBinding.titleEditTextLayout);
@@ -81,6 +86,7 @@ public class AddNewNoteActivity extends AppCompatActivity {
             activityAddNewNoteBinding.titleEditTextLayout.setError(null);
         }
 
+        //validate content edit text
         if (TextUtils.isEmpty(activityAddNewNoteBinding.contentEditText.getText().toString().trim())) {
             activityAddNewNoteBinding.contentEditTextLayout.setError("Enter Note text!");
             DeviceHelper.vibrateDevice(activityAddNewNoteBinding.contentEditTextLayout);
@@ -89,7 +95,8 @@ public class AddNewNoteActivity extends AppCompatActivity {
             activityAddNewNoteBinding.contentEditTextLayout.setError(null);
         }
 
-        /*if (activityAddNewNoteBinding.titleEditText.getText().toString().trim().length()>100){
+        //validation of title edit text for max 100 chars is done by XML
+         /*if (activityAddNewNoteBinding.titleEditText.getText().toString().trim().length()>100){
             activityAddNewNoteBinding.titleEditText.setError("Title too long.");
         }else {
             activityAddNewNoteBinding.titleEditText.setError(null);

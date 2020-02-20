@@ -2,6 +2,8 @@ package com.techneapps.notestaking.ui.allnotesviewer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -22,6 +24,8 @@ public class AllNotesViewerActivity extends AppCompatActivity {
     private ActivityAllNotesViewerBinding activityNotesViewerBinding;
 
     private NotesAdapter notesAdapter;
+    private boolean doubleBackToExitPressedOnce = false;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +33,7 @@ public class AllNotesViewerActivity extends AppCompatActivity {
         activityNotesViewerBinding = DataBindingUtil.setContentView(this, R.layout.activity_all_notes_viewer);
         setSupportActionBar(activityNotesViewerBinding.toolbar);
         allNotesViewerModel = ViewModelProviders.of(this).get(AllNotesViewerModel.class);
-        allNotesViewerModel.getNoteObjects().observe(this, noteObjs -> {
-            activityNotesViewerBinding.notesRecyclerView.setLayoutManager(new LinearLayoutManager(AllNotesViewerActivity.this));
-            Collections.sort(noteObjs, new SortingHelper.sortByDate());
-            notesAdapter = new NotesAdapter(AllNotesViewerActivity.this, noteObjs);
-            activityNotesViewerBinding.notesRecyclerView.setAdapter(notesAdapter);
-        });
-
+        handler = new Handler();
         activityNotesViewerBinding.addNoteFab.setOnClickListener(v ->
                 startActivity(new Intent(getApplicationContext(), AddNewNoteActivity.class)));
     }
@@ -43,6 +41,24 @@ public class AllNotesViewerActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        allNotesViewerModel.getNoteObjects().observe(this, noteObjs -> {
+            activityNotesViewerBinding.notesRecyclerView.setLayoutManager(new LinearLayoutManager(AllNotesViewerActivity.this));
+            Collections.sort(noteObjs, new SortingHelper.sortByDate());
+            notesAdapter = new NotesAdapter(AllNotesViewerActivity.this, noteObjs);
+            activityNotesViewerBinding.notesRecyclerView.setAdapter(notesAdapter);
+        });
+    }
 
+
+    @Override
+    public void onBackPressed() {
+        //method to double tap to exit from home
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Tap again to exit", Toast.LENGTH_SHORT).show();
+        handler.postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
     }
 }

@@ -7,6 +7,7 @@ import com.techneapps.notestaking.databinding.SingleListNoteBinding;
 
 public class NotesViewHolder extends RecyclerView.ViewHolder {
     public SingleListNoteBinding singleListNoteBinding;
+    //layout binding for view holder
 
     public NotesViewHolder(@NonNull SingleListNoteBinding singleListNoteBinding) {
         super(singleListNoteBinding.getRoot());

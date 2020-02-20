@@ -15,8 +15,9 @@ public class SingleNoteClickHandler {
     }
 
     public void viewNote(View view, NoteObj noteObj) {
-        Intent savedNoteIntent = new Intent(context, SingleNoteViewerActivity.class);
-        savedNoteIntent.putExtra("savedNote", noteObj);
-        context.startActivity(savedNoteIntent);
+        //start new activity with the appropriate note to view it
+        Intent viewSavedNoteIntent = new Intent(context, SingleNoteViewerActivity.class);
+        viewSavedNoteIntent.putExtra("savedNote", noteObj);
+        context.startActivity(viewSavedNoteIntent);
     }
 }
