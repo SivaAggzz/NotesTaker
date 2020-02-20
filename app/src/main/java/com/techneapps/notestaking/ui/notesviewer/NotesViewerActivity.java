@@ -1,5 +1,6 @@
 package com.techneapps.notestaking.ui.notesviewer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.techneapps.notestaking.R;
 import com.techneapps.notestaking.databinding.ActivityNotesViewerBinding;
 import com.techneapps.notestaking.ui.adapter.NotesAdapter;
+import com.techneapps.notestaking.ui.addnote.AddNewNote;
 
 public class NotesViewerActivity extends AppCompatActivity {
 
@@ -32,6 +34,9 @@ public class NotesViewerActivity extends AppCompatActivity {
             notesAdapter = new NotesAdapter(NotesViewerActivity.this, noteObjs);
             activityNotesViewerBinding.notesRecyclerView.setAdapter(notesAdapter);
         });
+
+        activityNotesViewerBinding.addNoteFab.setOnClickListener(v ->
+                startActivity(new Intent(getApplicationContext(), AddNewNote.class)));
     }
 
     @Override
