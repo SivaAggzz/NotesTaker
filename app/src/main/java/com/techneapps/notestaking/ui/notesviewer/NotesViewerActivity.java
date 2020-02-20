@@ -1,4 +1,4 @@
-package com.techneapps.notestaking;
+package com.techneapps.notestaking.ui.notesviewer;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,13 +7,15 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.techneapps.notestaking.R;
+
 public class NotesViewerActivity extends AppCompatActivity {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notesViewer);
+        setContentView(R.layout.activity_notes_viewer);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
