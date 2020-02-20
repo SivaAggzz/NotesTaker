@@ -22,18 +22,22 @@
                 app:hintAnimationEnabled="false"
                 app:hintEnabled="false">
 
+
                 <EditText
                     android:id="@+id/titleEditText"
+                    style="@style/TextAppearance.AppCompat.Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:hint="@string/title"
                     android:imeOptions="actionDone"
                     android:importantForAutofill="no"
-                    android:inputType="text"
+                    android:inputType="text|textCapSentences"
                     android:maxLength="100"
                     android:maxLines="1"
                     android:padding="16sp"
+                    android:textColor="@color/md_white_1000"
+                    android:textColorHint="@color/md_grey_300"
                     app:hintEnabled="false" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -51,14 +55,18 @@
 
                 <EditText
                     android:id="@+id/contentEditText"
+                    style="@style/TextAppearance.AppCompat.Body1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:hint="@string/note"
                     android:imeOptions="actionDone"
                     android:importantForAutofill="no"
-                    android:inputType="text"
+                    android:inputType="text|textCapSentences"
                     android:padding="16sp"
+                    android:textColor="@color/md_white_1000"
+                    android:textColorHint="@color/md_grey_300"
+                    android:textSize="16sp"
                     app:hintEnabled="false" />
             </com.google.android.material.textfield.TextInputLayout>
 

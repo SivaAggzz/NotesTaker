@@ -48,7 +48,7 @@ public class AddNewNoteActivity extends AppCompatActivity {
         activityAddNewNoteBinding.titleEditTextLayout.setHintAnimationEnabled(false);
         activityAddNewNoteBinding.contentEditTextLayout.setHintAnimationEnabled(false);
 
-
+        activityAddNewNoteBinding.contentEditTextLayout.requestFocus();
     }
 
     public void saveNote(View view) {
