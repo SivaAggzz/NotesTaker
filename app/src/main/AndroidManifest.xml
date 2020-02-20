@@ -3,24 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.techneapps.notestaking">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_new"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_new_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeDark"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ui.notesviewer.NotesViewerActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppThemeDark.NoActionBar">
+            android:name=".ui.splash.SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.addnote.AddNewNote" />
+        <activity
+            android:name=".ui.allnotesviewer.AllNotesViewerActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppThemeDark.NoActionBar" />
+        <activity android:name=".ui.addnote.AddNewNoteActivity" />
+        <activity android:name=".ui.singlenoteviewer.SingleNoteViewerActivity" />
     </application>
 
 </manifest>

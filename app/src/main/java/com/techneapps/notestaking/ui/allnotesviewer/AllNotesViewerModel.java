@@ -1,4 +1,4 @@
-package com.techneapps.notestaking.ui.notesviewer;
+package com.techneapps.notestaking.ui.allnotesviewer;
 
 import android.app.Application;
 import android.content.Context;
@@ -18,17 +18,17 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class NotesViewerModel extends AndroidViewModel {
+class AllNotesViewerModel extends AndroidViewModel {
     private Context context;
     private MutableLiveData<ArrayList<NoteObj>> noteObjects;
     private NotesDatabase notesDatabase;
 
-    public NotesViewerModel(@NonNull Application application) {
+    public AllNotesViewerModel(@NonNull Application application) {
         super(application);
         this.context = application.getApplicationContext();
     }
 
-    public MutableLiveData<ArrayList<NoteObj>> getNoteObjects() {
+    MutableLiveData<ArrayList<NoteObj>> getNoteObjects() {
         if (noteObjects == null) {
             noteObjects = new MutableLiveData<>();
         }

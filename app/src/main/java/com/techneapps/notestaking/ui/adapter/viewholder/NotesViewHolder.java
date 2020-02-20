@@ -10,5 +10,6 @@ public class NotesViewHolder extends RecyclerView.ViewHolder {
 
     public NotesViewHolder(@NonNull SingleListNoteBinding singleListNoteBinding) {
         super(singleListNoteBinding.getRoot());
+        this.singleListNoteBinding = singleListNoteBinding;
     }
 }

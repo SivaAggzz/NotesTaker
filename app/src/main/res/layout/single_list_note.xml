@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,26 +10,47 @@
     </data>
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/title"
-            style="@style/TextAppearance.AppCompat.Title"
+        <LinearLayout
+            android:id="@+id/contentLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{note.title}"
-            android:textColor="@color/md_white_1000" />
+            android:layout_alignParentTop="true"
+            android:orientation="vertical"
+            android:paddingStart="16sp"
+            android:paddingTop="16sp"
+            android:paddingEnd="16sp">
 
-        <TextView
-            android:id="@+id/content"
-            style="@style/TextAppearance.AppCompat.Body1"
+            <TextView
+                android:id="@+id/title"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{note.title}"
+                android:textColor="@color/md_white_1000" />
+
+            <TextView
+                android:id="@+id/content"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16sp"
+                android:text="@{note.content}"
+
+                android:textColor="@color/md_white_1000" />
+
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/divider"
+            layout="@layout/divider"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{note.content}"
-            android:textColor="@color/md_white_1000" />
-
-    </LinearLayout>
+            android:layout_height="1sp"
+            android:layout_below="@+id/contentLayout"
+            tools:ignore="SmallSp" />
+    </RelativeLayout>
 </layout>
