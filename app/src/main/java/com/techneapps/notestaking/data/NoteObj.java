@@ -5,7 +5,6 @@ public class NoteObj {
     public String content;
     public long timeStamp;
 
-
     public String getTitle() {
         return title;
     }
