@@ -26,7 +26,9 @@ public class AllNotesViewerModel extends AndroidViewModel {
     public AllNotesViewerModel(@NonNull Application application) {
         super(application);
         this.context = application.getApplicationContext();
+        notesDatabase = Room.databaseBuilder(context, NotesDatabase.class, "notes.db").build();
     }
+
 
     MutableLiveData<ArrayList<NoteObj>> getNoteObjects() {
         if (noteObjects == null) {
@@ -38,7 +40,6 @@ public class AllNotesViewerModel extends AndroidViewModel {
 
     //method to get saved note from Room database by using RXJava
     private MutableLiveData<ArrayList<NoteObj>> getAllSavedNotesThread() {
-        notesDatabase = Room.databaseBuilder(context, NotesDatabase.class, "notes.db").build();
         CompositeDisposable compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(Observable.fromCallable(() -> notesDatabase.getNotesDao().getNotes())
                 .subscribeOn(Schedulers.io())
@@ -47,4 +48,16 @@ public class AllNotesViewerModel extends AndroidViewModel {
         return noteObjects;
     }
 
+    //method to clear saved note from Room database by using RXJava
+    public void clearNotesObjects() {
+        CompositeDisposable compositeDisposable = new CompositeDisposable();
+        compositeDisposable.add(Observable.fromCallable(() -> {
+            notesDatabase.clearAllTables();
+            return true;
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((result) -> {
+                }));
+    }
 }
