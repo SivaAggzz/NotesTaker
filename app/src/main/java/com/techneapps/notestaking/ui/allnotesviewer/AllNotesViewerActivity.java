@@ -41,6 +41,8 @@ public class AllNotesViewerActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        //color NavigationBarColor to match UI
+        getWindow().setNavigationBarColor(getResources().getColor(R.color.md_grey_900));
         allNotesViewerModel.getNoteObjects().observe(this, noteObjs -> {
             activityNotesViewerBinding.notesRecyclerView.setLayoutManager(new LinearLayoutManager(AllNotesViewerActivity.this));
             Collections.sort(noteObjs, new SortingHelper.sortByDate());

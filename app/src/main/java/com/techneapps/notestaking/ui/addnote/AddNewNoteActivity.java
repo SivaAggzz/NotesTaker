@@ -34,6 +34,14 @@ public class AddNewNoteActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        //color NavigationBarColor to match UI
+        getWindow().setNavigationBarColor(getResources().getColor(R.color.md_grey_900));
+
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         //if the back button in toolbar is Selected
         if (item.getItemId() == android.R.id.home) {

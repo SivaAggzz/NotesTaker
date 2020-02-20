@@ -33,6 +33,7 @@
             android:paddingEnd="16sp">
 
             <TextView
+                android:layout_marginBottom="5sp"
                 android:id="@+id/title"
                 style="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="match_parent"
@@ -47,7 +48,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16sp"
                 android:text="@{note.content}"
-
+                android:ellipsize="end"
+                android:maxLines="4"
                 android:textColor="@color/md_white_1000" />
 
 
