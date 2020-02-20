@@ -7,7 +7,7 @@ import androidx.databinding.BindingAdapter;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-class BindingAdapters {
+public class BindingAdapters {
     @BindingAdapter(value = "timeStamp")
     public static void setNoteDate(TextView textView, long timeStamp) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM YYYY, hh:mm a", Locale.getDefault());

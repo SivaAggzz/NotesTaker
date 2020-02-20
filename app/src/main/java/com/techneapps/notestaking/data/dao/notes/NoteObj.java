@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "notes")
 public class NoteObj implements Parcelable {
-    @SuppressWarnings("unused")
+
     public static final Parcelable.Creator<NoteObj> CREATOR = new Parcelable.Creator<NoteObj>() {
         @Override
         public NoteObj createFromParcel(Parcel in) {
@@ -21,15 +21,24 @@ public class NoteObj implements Parcelable {
             return new NoteObj[size];
         }
     };
+
     @PrimaryKey(autoGenerate = true)
     private long id;
     private String title;
     private String content;
     private long timeStamp;
 
+    @Ignore
     public NoteObj() {
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
