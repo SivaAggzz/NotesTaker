@@ -6,5 +6,10 @@
     <string name="saved_note">Saved note</string>
     <string name="tap_again_to_exit">Tap again to exit</string>
     <string name="add_new_note">Add new note</string>
-    <string name="clear_all_notes">Clear all Notes</string>
+    <string name="clear_all_notes">Delete all notes</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="conf_clear_all_notes">Are you sure you want to delete all saved notes?\nThis action is irreversible.</string>
+    <string name="confirm">Confirm delete</string>
+    <string name="cleared_all_notes">All saved notes cleared</string>
 </resources>

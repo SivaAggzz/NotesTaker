@@ -1,10 +1,12 @@
 package com.techneapps.notestaking.ui.allnotesviewer;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +24,9 @@ import com.techneapps.notestaking.ui.addnote.AddNewNoteActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import static com.techneapps.notestaking.helper.MustMethods.showBeautifiedDialog;
+import static com.techneapps.notestaking.helper.MustMethods.showToast;
 
 public class AllNotesViewerActivity extends AppCompatActivity {
 
@@ -56,7 +61,6 @@ public class AllNotesViewerActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.all_notes_activity, menu);
@@ -84,10 +88,25 @@ public class AllNotesViewerActivity extends AppCompatActivity {
         handler.postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
     }
 
-    //method to clear all saved notes
     private void clearAllNotes() {
-        allNotesViewerModel.clearNotesObjects();
-        setAdapter(new ArrayList<>());
+        showClearAllNotesConfirmation();
+
+    }
+
+    private void showClearAllNotesConfirmation() {
+        Dialog confirmClearNotesDialog = showBeautifiedDialog(this
+                , getResources().getString(R.string.conf_clear_all_notes));
+        ((TextView) confirmClearNotesDialog.findViewById(R.id.title)).setText(getResources().getString(R.string.confirm));
+        confirmClearNotesDialog.findViewById(R.id.okBtn).setOnClickListener(v -> {
+            //user pressed confirm button
+            //method to clear all saved notes
+            confirmClearNotesDialog.dismiss();
+            allNotesViewerModel.clearNotesObjects();
+            setAdapter(new ArrayList<>());
+            showToast(this, getResources().getString(R.string.cleared_all_notes));
+        });
+        confirmClearNotesDialog.show();
+
     }
 
 
