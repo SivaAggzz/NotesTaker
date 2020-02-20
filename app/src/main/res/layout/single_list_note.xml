@@ -5,12 +5,20 @@
     <data>
 
         <variable
+            name="clickHandler"
+            type="com.techneapps.notestaking.ui.adapter.clickHandler.SingleNoteClickHandler" />
+
+        <variable
             name="note"
             type="com.techneapps.notestaking.data.dao.notes.NoteObj" />
     </data>
 
 
     <RelativeLayout
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{(v)->clickHandler.viewNote(v,note)}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

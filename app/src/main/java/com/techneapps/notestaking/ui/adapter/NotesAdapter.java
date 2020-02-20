@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.techneapps.notestaking.R;
 import com.techneapps.notestaking.data.dao.notes.NoteObj;
 import com.techneapps.notestaking.databinding.SingleListNoteBinding;
+import com.techneapps.notestaking.ui.adapter.clickHandler.SingleNoteClickHandler;
 import com.techneapps.notestaking.ui.adapter.viewholder.NotesViewHolder;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull NotesViewHolder notesViewHolder, int position) {
         notesViewHolder.singleListNoteBinding.setNote(noteObjs.get(position));
+        notesViewHolder.singleListNoteBinding.setClickHandler(new SingleNoteClickHandler(context));
     }
 
     @Override

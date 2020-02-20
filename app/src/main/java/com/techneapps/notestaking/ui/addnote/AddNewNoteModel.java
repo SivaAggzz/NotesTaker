@@ -17,7 +17,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 @SuppressWarnings("SameReturnValue")
-class AddNewNoteModel extends AndroidViewModel {
+public class AddNewNoteModel extends AndroidViewModel {
     private Context context;
     private NotesDatabase notesDatabase;
 
