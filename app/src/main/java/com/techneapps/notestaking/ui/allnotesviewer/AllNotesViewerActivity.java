@@ -29,6 +29,13 @@ public class AllNotesViewerActivity extends AppCompatActivity {
         activityNotesViewerBinding = DataBindingUtil.setContentView(this, R.layout.activity_all_notes_viewer);
         setSupportActionBar(activityNotesViewerBinding.toolbar);
         allNotesViewerModel = ViewModelProviders.of(this).get(AllNotesViewerModel.class);
+        allNotesViewerModel.getNoteObjects().observe(this, noteObjs -> {
+            activityNotesViewerBinding.notesRecyclerView.setLayoutManager(new LinearLayoutManager(AllNotesViewerActivity.this));
+            Collections.sort(noteObjs, new SortingHelper.sortByDate());
+            notesAdapter = new NotesAdapter(AllNotesViewerActivity.this, noteObjs);
+            activityNotesViewerBinding.notesRecyclerView.setAdapter(notesAdapter);
+        });
+
         activityNotesViewerBinding.addNoteFab.setOnClickListener(v ->
                 startActivity(new Intent(getApplicationContext(), AddNewNoteActivity.class)));
     }
@@ -36,11 +43,6 @@ public class AllNotesViewerActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        allNotesViewerModel.getNoteObjects().observe(this, noteObjs -> {
-            activityNotesViewerBinding.notesRecyclerView.setLayoutManager(new LinearLayoutManager(AllNotesViewerActivity.this));
-            Collections.sort(noteObjs, new SortingHelper.sortByDate());
-            notesAdapter = new NotesAdapter(AllNotesViewerActivity.this, noteObjs);
-            activityNotesViewerBinding.notesRecyclerView.setAdapter(notesAdapter);
-        });
+
     }
 }

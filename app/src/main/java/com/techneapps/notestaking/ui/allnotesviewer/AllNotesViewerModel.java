@@ -18,7 +18,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-class AllNotesViewerModel extends AndroidViewModel {
+public class AllNotesViewerModel extends AndroidViewModel {
     private Context context;
     private MutableLiveData<ArrayList<NoteObj>> noteObjects;
     private NotesDatabase notesDatabase;
