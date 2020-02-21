@@ -41,6 +41,10 @@ No setup is required in order to use NotesTaker. Just Install the application an
 - Preference to save note on exiting automatically
 
 
+# Permissions Used
+- android.permission.VIBRATE
+
+
 # Screenshots
 <img src="https://i.imgur.com/vuUtIJB.jpg" height="234" width="108"> &nbsp;<img src="https://i.imgur.com/s8idyiI.jpg" height="234" width="108">&nbsp;<img src="https://i.imgur.com/dOM1TOq.jpg" height="234" width="108">&nbsp;<img src="https://i.imgur.com/9GKECeS.jpg" height="234" width="108">
 
