@@ -27,7 +27,7 @@ public abstract class SelectableAdapter<VH extends RecyclerView.ViewHolder> exte
             selecteditems.put(pos, true);
 
         }
-        notifyItemChanged(pos);
+        notifyDataSetChanged();
     }
 
     public void toggleAllSelection(int count) {

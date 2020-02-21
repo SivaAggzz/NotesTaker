@@ -214,7 +214,7 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
     }
 
     @Override
-    public boolean onNoteLongClicked(int position) {
+    public void onNoteLongClicked(int position) {
         //toggle this very position
         notesAdapter.toggleSelection(position);
         if (notesAdapter.isSelected(position)) {
@@ -234,7 +234,6 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
             resetFABToAdd();
             resetToolbarIcon();
         }
-        return true;
     }
 
 

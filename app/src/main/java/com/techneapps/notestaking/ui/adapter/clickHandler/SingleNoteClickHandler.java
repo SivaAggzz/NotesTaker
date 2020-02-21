@@ -20,8 +20,8 @@ public class SingleNoteClickHandler {
     }
 
     public boolean onNoteLongClicked(View view) {
-        return onSingleNoteClickListener.onNoteLongClicked(position);
-
+        onSingleNoteClickListener.onNoteLongClicked(position);
+        return true;
     }
 
 }
