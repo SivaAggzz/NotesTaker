@@ -1,9 +1,15 @@
 package com.techneapps.notestaking.ui.adapter.swipelistener;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.techneapps.notestaking.R;
 import com.techneapps.notestaking.providers.interfaces.OnSwipeListener;
 
 import static androidx.recyclerview.widget.ItemTouchHelper.LEFT;
@@ -12,6 +18,8 @@ import static androidx.recyclerview.widget.ItemTouchHelper.RIGHT;
 public class SwipeListener extends ItemTouchHelper.Callback {
     private OnSwipeListener onSwipeListener;
     private boolean swipeBack = false;
+    private Drawable icon;
+    private ColorDrawable background;
 
 
     public SwipeListener(OnSwipeListener onSwipeListener) {
@@ -20,6 +28,9 @@ public class SwipeListener extends ItemTouchHelper.Callback {
 
     @Override
     public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+        icon = ContextCompat.getDrawable(recyclerView.getContext(),
+                R.drawable.ic_delete_white_24dp);
+        background = new ColorDrawable(Color.RED);
         return makeMovementFlags(0, LEFT | RIGHT);
     }
 

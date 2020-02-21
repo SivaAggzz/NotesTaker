@@ -54,6 +54,12 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
         handler = new Handler();
         activityNotesViewerBinding.addNoteFab.setOnClickListener(v ->
                 startActivity(new Intent(getApplicationContext(), AddNewNoteActivity.class)));
+        activityNotesViewerBinding.swipeRefreshRootLayout.setOnRefreshListener(this::onSwipeRefreshLayout);
+    }
+
+    private void onSwipeRefreshLayout() {
+        loadSavedNotes();
+        activityNotesViewerBinding.swipeRefreshRootLayout.setRefreshing(false);
     }
 
     @Override
@@ -61,6 +67,10 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
         super.onResume();
         //color NavigationBarColor to match UI
         getWindow().setNavigationBarColor(getResources().getColor(R.color.md_grey_900));
+        loadSavedNotes();
+    }
+
+    private void loadSavedNotes() {
         allNotesViewerModel.getNoteObjects().observe(this, noteObjs -> {
             SwipeListener swipeListener = new SwipeListener(AllNotesViewerActivity.this);
             ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeListener);
