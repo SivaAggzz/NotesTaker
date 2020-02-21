@@ -52,6 +52,10 @@ public class NotesAdapter extends SelectableAdapter<NotesViewHolder> {
 
     }
 
+    public void removeItem(int position) {
+        noteObjs.remove(position);
+        notifyItemRemoved(position);
+    }
     public NoteObj get(int position) {
         return noteObjs.get(position);
     }

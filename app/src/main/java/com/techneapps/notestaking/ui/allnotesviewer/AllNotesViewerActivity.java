@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.techneapps.notestaking.R;
@@ -25,9 +24,7 @@ import com.techneapps.notestaking.databinding.ActivityAllNotesViewerBinding;
 import com.techneapps.notestaking.helper.AnimationHelper;
 import com.techneapps.notestaking.helper.SortingHelper;
 import com.techneapps.notestaking.providers.interfaces.OnSingleNoteClickListener;
-import com.techneapps.notestaking.providers.interfaces.OnSwipeListener;
 import com.techneapps.notestaking.ui.adapter.NotesAdapter;
-import com.techneapps.notestaking.ui.adapter.swipelistener.SwipeListener;
 import com.techneapps.notestaking.ui.addnote.AddNewNoteActivity;
 import com.techneapps.notestaking.ui.pref.SettingsActivity;
 import com.techneapps.notestaking.ui.singlenoteviewer.SingleNoteViewerActivity;
@@ -38,7 +35,7 @@ import java.util.Collections;
 import static com.techneapps.notestaking.helper.MustMethods.showBeautifiedDialog;
 import static com.techneapps.notestaking.helper.MustMethods.showToast;
 
-public class AllNotesViewerActivity extends AppCompatActivity implements OnSingleNoteClickListener, OnSwipeListener {
+public class AllNotesViewerActivity extends AppCompatActivity implements OnSingleNoteClickListener {
 
     private AllNotesViewerModel allNotesViewerModel;
     private ActivityAllNotesViewerBinding activityNotesViewerBinding;
@@ -90,9 +87,6 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
     }
 
     private void loadSavedNotes() {
-        SwipeListener swipeListener = new SwipeListener(AllNotesViewerActivity.this);
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeListener);
-        itemTouchHelper.attachToRecyclerView(activityNotesViewerBinding.notesRecyclerView);
 
         allNotesViewerModel.getNoteObjects().observe(this, noteObjs -> {
             activityNotesViewerBinding.notesRecyclerView.setLayoutManager(new LinearLayoutManager(AllNotesViewerActivity.this));
@@ -178,14 +172,18 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
 
     private void deleteSelectedNotes() {
         //delete from db
-        for (int i = 0; i < notesAdapter.getSelectedItemCount(); i++) {
+      /*  for (int i = 0; i < notesAdapter.getSelectedItemCount(); i++) {
             tempNoteObj = notesAdapter.get(notesAdapter.getSelectedItems().get(i));
             allNotesViewerModel.deleteNote(tempNoteObj);
+        }*/
+        for (int i = 0; i < selectedNotes.size(); i++) {
+            notesAdapter.removeItem(notesAdapter.getSelectedItems().get(i));
         }
         showToast(this, getString(R.string.notes_deleted));
         resetToolbarIcon();
+        resetFABToAdd();
         //load fresh data from db
-        loadSavedNotes();
+        // loadSavedNotes();
 
     }
 
@@ -263,14 +261,4 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
         ObjectAnimator.ofFloat(drawerArrowDrawable, "progress", 1).start();
     }
 
-    @Override
-    public void onSwipedLeft() {
-        showToast(this, "onSwipedLeft");
-    }
-
-    @Override
-    public void onSwipedRight() {
-        showToast(this, "onSwipedRight");
-
-    }
 }
