@@ -1,74 +1,120 @@
 package com.techneapps.notestaking.helper;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.content.res.ColorStateList;
-import android.view.View;
-import android.view.animation.OvershootInterpolator;
-
-import androidx.core.view.ViewCompat;
-import androidx.core.view.ViewPropertyAnimatorListener;
+import android.os.Handler;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.techneapps.notestaking.R;
 
 public class AnimationHelper {
-    public static void rotateFABForward(FloatingActionButton floatingActionButton) {
+    public static void rotateFABToDelete(FloatingActionButton floatingActionButton) {
 
-        ViewPropertyAnimatorListener listener = new ViewPropertyAnimatorListener() {
+        Animator.AnimatorListener animatorListener = new Animator.AnimatorListener() {
             @Override
-            public void onAnimationStart(View view) {
+            public void onAnimationStart(Animator animation) {
+                new Handler().postDelayed(() -> floatingActionButton.setImageResource(R.drawable.ic_delete_white_24dp), 200);
                 floatingActionButton
                         .setBackgroundTintList(ColorStateList
                                 .valueOf(floatingActionButton.getContext()
                                         .getResources().getColor(R.color.md_red_600)));
-            }
-
-            @Override
-            public void onAnimationEnd(View view) {
 
             }
 
             @Override
-            public void onAnimationCancel(View view) {
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
 
             }
         };
-        ViewCompat.animate(floatingActionButton)
-                .rotation(135.0F)
-                .withLayer()
-                .setDuration(400L)
-                .setInterpolator(new OvershootInterpolator())
-                .setListener(listener)
-                .start();
+
+        ObjectAnimator rotation = ObjectAnimator
+                .ofFloat(floatingActionButton, "rotation", 0f, 360f);
+        rotation.setDuration(400);
+        rotation.addListener(animatorListener);
+        rotation.start();
+
 
     }
 
-    public static void rotateFABBackward(FloatingActionButton floatingActionButton) {
-        ViewPropertyAnimatorListener listener = new ViewPropertyAnimatorListener() {
+    public static void rotateFABToAdd(FloatingActionButton floatingActionButton) {
+
+        Animator.AnimatorListener animatorListener = new Animator.AnimatorListener() {
             @Override
-            public void onAnimationStart(View view) {
+            public void onAnimationStart(Animator animation) {
+                new Handler().postDelayed(() -> floatingActionButton.setImageResource(R.drawable.ic_add_white_24dp), 200);
                 floatingActionButton
                         .setBackgroundTintList(ColorStateList
                                 .valueOf(floatingActionButton.getContext()
                                         .getResources().getColor(R.color.colorAccent)));
-            }
-
-            @Override
-            public void onAnimationEnd(View view) {
 
             }
 
             @Override
-            public void onAnimationCancel(View view) {
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
 
             }
         };
-        ViewCompat.animate(floatingActionButton)
-                .rotation(0.0F)
-                .withLayer()
-                .setDuration(400L)
-                .setInterpolator(new OvershootInterpolator())
-                .setListener(listener)
-                .start();
+        ObjectAnimator rotation = ObjectAnimator
+                .ofFloat(floatingActionButton, "rotation", 0f, 360f);
+        rotation.setDuration(400);
+        rotation.addListener(animatorListener);
+        rotation.start();
+    }
+
+    public static void rotateFABToEdit(FloatingActionButton floatingActionButton) {
+
+        Animator.AnimatorListener animatorListener = new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                new Handler().postDelayed(() -> floatingActionButton.setImageResource(R.drawable.ic_edit_white_24dp), 200);
+                floatingActionButton
+                        .setBackgroundTintList(ColorStateList
+                                .valueOf(floatingActionButton.getContext()
+                                        .getResources().getColor(R.color.colorAccent)));
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        };
+        ObjectAnimator rotation = ObjectAnimator
+                .ofFloat(floatingActionButton, "rotation", 0f, 360f);
+        rotation.setDuration(400);
+        rotation.addListener(animatorListener);
+        rotation.start();
     }
 
 }

@@ -43,6 +43,8 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
     private boolean doubleBackToExitPressedOnce = false;
     private Handler handler;
 
+    private boolean contextualDeleteFABShown = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +90,7 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
     @Override
     public void onBackPressed() {
         if (notesAdapter.getSelectedItemCount() > 0) {
-            hideContextualMenu();
+            resetFABToAdd();
             return;
         }
 
@@ -155,22 +157,29 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
         notesAdapter.toggleSelection(position);
         //check for selected count and toggle contextual menus acc
         if (notesAdapter.getSelectedItemCount() > 0) {
-            showContextualMenu();
+            if (!contextualDeleteFABShown) {
+                showContextualDeleteMenu();
+            }
         } else {
-            hideContextualMenu();
+            resetFABToAdd();
         }
         return true;
     }
 
-    private void hideContextualMenu() {
+
+    private void resetFABToAdd() {
         if (notesAdapter.getSelectedItemCount() > 0) {
             notesAdapter.clearSelection();
         }
-        AnimationHelper.rotateFABBackward(activityNotesViewerBinding.addNoteFab);
+        AnimationHelper.rotateFABToAdd(activityNotesViewerBinding.addNoteFab);
+        contextualDeleteFABShown = false;
+
     }
 
-    private void showContextualMenu() {
-        AnimationHelper.rotateFABForward(activityNotesViewerBinding.addNoteFab);
+    private void showContextualDeleteMenu() {
+
+        contextualDeleteFABShown = true;
+        AnimationHelper.rotateFABToDelete(activityNotesViewerBinding.addNoteFab);
     }
 
     @Override
