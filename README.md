@@ -42,6 +42,11 @@ No setup is required in order to use NotesTaker. Just Install the application an
 
 
 # Screenshots
+<img src="https://i.imgur.com/vuUtIJB.jpg" height="234" width="108"> &nbsp;<img src="https://i.imgur.com/s8idyiI.jpg" height="234" width="108">&nbsp;<img src="https://i.imgur.com/dOM1TOq.jpg" height="234" width="108">&nbsp;<img src="https://i.imgur.com/9GKECeS.jpg" height="234" width="108">
 
+
+<img src="https://i.imgur.com/SkaFM6s.jpg" height="234" width="108">&nbsp;<img src="https://i.imgur.com/yuUSmhP.jpg" height="234" width="108">&nbsp;<img src="https://i.imgur.com/cIVaX1C.jpg" height="234" width="108">&nbsp;<img src="https://i.imgur.com/rDeCDHL.jpg" height="234" width="108">
+
+<img src="https://i.imgur.com/JdMRiF7.jpg" height="234" width="108">&nbsp;<img src="https://i.imgur.com/s1BFj8Q.jpg" height="234" width="108">&nbsp;<img src="https://i.imgur.com/GxLypZv.jpg" height="234" width="108">
 
 
