@@ -26,8 +26,8 @@ import com.techneapps.notestaking.helper.SortingHelper;
 import com.techneapps.notestaking.providers.interfaces.OnSingleNoteClickListener;
 import com.techneapps.notestaking.ui.adapter.NotesAdapter;
 import com.techneapps.notestaking.ui.addnote.AddNewNoteActivity;
+import com.techneapps.notestaking.ui.editnote.EditNoteActivity;
 import com.techneapps.notestaking.ui.pref.SettingsActivity;
-import com.techneapps.notestaking.ui.singlenoteviewer.SingleNoteViewerActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -172,10 +172,10 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
 
     private void deleteSelectedNotes() {
         //delete from db
-      /*  for (int i = 0; i < notesAdapter.getSelectedItemCount(); i++) {
+        for (int i = 0; i < notesAdapter.getSelectedItemCount(); i++) {
             tempNoteObj = notesAdapter.get(notesAdapter.getSelectedItems().get(i));
             allNotesViewerModel.deleteNote(tempNoteObj);
-        }*/
+        }
         for (int i = 0; i < selectedNotes.size(); i++) {
             notesAdapter.removeItem(notesAdapter.getSelectedItems().get(i));
         }
@@ -206,7 +206,7 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
         } else {
             //no item selected -> so normal click method
             //start new activity with the appropriate note to view it
-            Intent viewSavedNoteIntent = new Intent(this, SingleNoteViewerActivity.class);
+            Intent viewSavedNoteIntent = new Intent(this, EditNoteActivity.class);
             viewSavedNoteIntent.putExtra("savedNote", noteObj);
             startActivity(viewSavedNoteIntent);
         }

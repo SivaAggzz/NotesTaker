@@ -20,6 +20,7 @@ public interface NotesDao {
     @Update
     void updateNote(NoteObj noteObj);
 
+
     @Query("select * from notes")
     List<NoteObj> getNotes();
 

@@ -15,7 +15,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".ui.pref.SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings" />
         <activity
             android:name=".ui.splash.SplashActivity"
             android:theme="@style/SplashTheme">
@@ -31,6 +31,7 @@
             android:theme="@style/AppThemeDark.NoActionBar" />
         <activity android:name=".ui.addnote.AddNewNoteActivity" />
         <activity android:name=".ui.singlenoteviewer.SingleNoteViewerActivity" />
+        <activity android:name=".ui.editnote.EditNoteActivity" />
     </application>
 
 </manifest>

@@ -1,40 +1,29 @@
 package com.techneapps.notestaking.data.dao.notes;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 @Entity(tableName = "notes")
-public class NoteObj implements Parcelable {
+public class NoteObj implements Serializable {
 
-    public static final Parcelable.Creator<NoteObj> CREATOR = new Parcelable.Creator<NoteObj>() {
-        @Override
-        public NoteObj createFromParcel(Parcel in) {
-            return new NoteObj(in);
-        }
-
-        @Override
-        public NoteObj[] newArray(int size) {
-            return new NoteObj[size];
-        }
-    };
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "note_id")
-    private long id;
+    public long id;
 
     @ColumnInfo(name = "note_title")
-    private String title;
+    public String title;
 
     @ColumnInfo(name = "note_content")
-    private String content;
+    public String content;
 
     @ColumnInfo(name = "note_time_stamp")
-    private long timeStamp;
+    public long timeStamp;
 
     @Ignore
     public NoteObj() {
@@ -79,22 +68,32 @@ public class NoteObj implements Parcelable {
         this.timeStamp = timeStamp;
     }
 
-    @Ignore
-    private NoteObj(Parcel in) {
-        title = in.readString();
-        content = in.readString();
-        timeStamp = in.readLong();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof NoteObj)) return false;
+
+        NoteObj noteObj = (NoteObj) o;
+
+        if (id != noteObj.id) return false;
+        return Objects.equals(title, noteObj.title);
+    }
+
+
+    @Override
+    public int hashCode() {
+        int result = 12;
+        result = 81 * result + (title != null ? title.hashCode() : 0);
+        return result;
     }
 
     @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(title);
-        dest.writeString(content);
-        dest.writeLong(timeStamp);
+    public String toString() {
+        return "Note{" +
+                "note_id=" + id +
+                ", content='" + content + '\'' +
+                ", title='" + title + '\'' +
+                '}';
     }
 }

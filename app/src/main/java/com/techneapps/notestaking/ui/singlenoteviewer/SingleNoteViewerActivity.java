@@ -45,6 +45,6 @@ public class SingleNoteViewerActivity extends AppCompatActivity {
 
 
     private NoteObj getIncomingNote() {
-        return getIntent().getParcelableExtra("savedNote");
+        return (NoteObj) getIntent().getSerializableExtra("savedNote");
     }
 }
