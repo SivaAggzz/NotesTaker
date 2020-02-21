@@ -34,7 +34,13 @@ public class AddNewNoteActivity extends AppCompatActivity {
         initUI();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //color NavigationBarColor to match UI
+        getWindow().setNavigationBarColor(getResources().getColor(R.color.md_grey_900));
 
+    }
     @Override
     public void onBackPressed() {
         if (UserPreferenceGetterHelper.isSaveOnExit(this)) {
