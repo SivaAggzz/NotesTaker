@@ -49,10 +49,22 @@ public class AllNotesViewerModel extends AndroidViewModel {
     }
 
     //method to clear saved note from Room database by using RXJava
-    public void clearNotesObjects() {
+    void clearNotesObjects() {
         CompositeDisposable compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(Observable.fromCallable(() -> {
             notesDatabase.clearAllTables();
+            return true;
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((result) -> {
+                }));
+    }
+
+    void deleteNote(NoteObj noteObj) {
+        CompositeDisposable compositeDisposable = new CompositeDisposable();
+        compositeDisposable.add(Observable.fromCallable(() -> {
+            notesDatabase.getNotesDao().deleteNote(noteObj);
             return true;
         })
                 .subscribeOn(Schedulers.io())

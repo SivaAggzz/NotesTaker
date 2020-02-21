@@ -16,6 +16,7 @@ import com.techneapps.notestaking.R;
 import com.techneapps.notestaking.data.dao.notes.NoteObj;
 import com.techneapps.notestaking.databinding.ActivityAddNewNoteBinding;
 import com.techneapps.notestaking.helper.DeviceHelper;
+import com.techneapps.notestaking.helper.UserPreferenceGetterHelper;
 import com.techneapps.notestaking.ui.singlenoteviewer.SingleNoteViewerActivity;
 
 import java.util.Objects;
@@ -33,11 +34,15 @@ public class AddNewNoteActivity extends AppCompatActivity {
         initUI();
     }
 
+
     @Override
-    protected void onResume() {
-        super.onResume();
-        //color NavigationBarColor to match UI
-        getWindow().setNavigationBarColor(getResources().getColor(R.color.md_grey_900));
+    public void onBackPressed() {
+        if (UserPreferenceGetterHelper.isSaveOnExit(this)) {
+            if (validateFieldsWithoutError()) {
+                saveValidatedNoteWithoutPreview();
+            }
+        }
+        super.onBackPressed();
 
     }
 
@@ -45,7 +50,7 @@ public class AddNewNoteActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         //if the back button in toolbar is Selected
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -61,17 +66,27 @@ public class AddNewNoteActivity extends AppCompatActivity {
         activityAddNewNoteBinding.contentEditTextLayout.requestFocus();
     }
 
-    public void saveNote(View view) {
+    public void saveNoteWithPreview(@Nullable View view) {
         if (validateFields()) {
             NoteObj currentNoteObj = getCurrentNoteObj();
             addNewNoteModel.saveNote(currentNoteObj, () -> {
+
                 Intent savedNoteIntent = new Intent(this, SingleNoteViewerActivity.class);
                 savedNoteIntent.putExtra("savedNote", currentNoteObj);
                 finish();
                 startActivity(savedNoteIntent);
+
             });
 
         }
+    }
+
+    public void saveValidatedNoteWithoutPreview() {
+        NoteObj currentNoteObj = getCurrentNoteObj();
+        addNewNoteModel.saveNote(currentNoteObj, () -> {
+
+        });
+
     }
 
     private NoteObj getCurrentNoteObj() {
@@ -112,5 +127,15 @@ public class AddNewNoteActivity extends AppCompatActivity {
         return true;
     }
 
+    private boolean validateFieldsWithoutError() {
+        //returns boolean value according to the result found while validating
 
+        //validate title edit text
+        if (TextUtils.isEmpty(activityAddNewNoteBinding.titleEditText.getText().toString().trim())) {
+            return false;
+        }
+
+        //validate content edit text
+        return !TextUtils.isEmpty(activityAddNewNoteBinding.contentEditText.getText().toString().trim());
+    }
 }

@@ -11,10 +11,8 @@ import java.util.List;
 public abstract class SelectableAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
     private SparseBooleanArray selecteditems;
 
-    protected SelectableAdapter() {
+    SelectableAdapter() {
         selecteditems = new SparseBooleanArray();
-
-
     }
 
 
@@ -74,12 +72,13 @@ public abstract class SelectableAdapter<VH extends RecyclerView.ViewHolder> exte
         return selecteditems.size();
     }
 
-    protected List<Integer> getSelectedItems() {
+    public List<Integer> getSelectedItems() {
         List<Integer> items = new ArrayList<>(selecteditems.size());
         for (int i = 0; i < selecteditems.size(); i++) {
             items.add(selecteditems.keyAt(i));
         }
         return items;
     }
+
 
 }

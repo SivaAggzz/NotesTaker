@@ -1,9 +1,11 @@
 package com.techneapps.notestaking.ui.allnotesviewer;
 
+import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -11,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -45,16 +48,31 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
     private Handler handler;
 
     private boolean contextualDeleteFABShown = false;
+    private DrawerArrowDrawable drawerArrowDrawable;
+    private NoteObj tempNoteObj;
+
+    private ArrayList<NoteObj> selectedNotes = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityNotesViewerBinding = DataBindingUtil.setContentView(this, R.layout.activity_all_notes_viewer);
         setSupportActionBar(activityNotesViewerBinding.toolbar);
+        drawerArrowDrawable = new DrawerArrowDrawable(this);
+        drawerArrowDrawable.setColor(getResources().getColor(R.color.md_blue_600));
+        activityNotesViewerBinding.toolbar.setNavigationIcon(drawerArrowDrawable);
         allNotesViewerModel = ViewModelProviders.of(this).get(AllNotesViewerModel.class);
         handler = new Handler();
-        activityNotesViewerBinding.addNoteFab.setOnClickListener(v ->
-                startActivity(new Intent(getApplicationContext(), AddNewNoteActivity.class)));
+        activityNotesViewerBinding.addNoteFab.setOnClickListener(v -> {
+            if (notesAdapter.getSelectedItemCount() > 0) {
+                //show confirm multiple delete dialog
+                showConfirmMultipleDeleteDialog();
+            } else {
+                //add new note function
+                startActivity(new Intent(getApplicationContext(), AddNewNoteActivity.class));
+            }
+        });
         activityNotesViewerBinding.swipeRefreshRootLayout.setOnRefreshListener(this::onSwipeRefreshLayout);
     }
 
@@ -104,6 +122,7 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
     @Override
     public void onBackPressed() {
         if (notesAdapter.getSelectedItemCount() > 0) {
+            resetToolbarIcon();
             resetFABToAdd();
             return;
         }
@@ -117,6 +136,7 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
         Toast.makeText(this, getResources().getString(R.string.tap_again_to_exit), Toast.LENGTH_SHORT).show();
         handler.postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
     }
+
 
     private void clearAllNotes() {
         showClearAllNotesConfirmation();
@@ -136,6 +156,36 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
             showToast(this, getResources().getString(R.string.cleared_all_notes));
         });
         confirmClearNotesDialog.show();
+
+    }
+
+
+    private void showConfirmMultipleDeleteDialog() {
+        Dialog confirmMultipleDeleteDialog = showBeautifiedDialog(this
+                , (notesAdapter.getSelectedItemCount() == 1)
+                        ? getResources().getString(R.string.conf_delete_single_note) : getResources().getString(R.string.conf_delete_multiple_notes));
+        ((TextView) confirmMultipleDeleteDialog.findViewById(R.id.title))
+                .setText(getResources().getString(R.string.confirm));
+        confirmMultipleDeleteDialog.findViewById(R.id.okBtn).setOnClickListener(v -> {
+            //user pressed confirm button
+            //method to
+            deleteSelectedNotes();
+            confirmMultipleDeleteDialog.dismiss();
+        });
+        confirmMultipleDeleteDialog.show();
+
+    }
+
+    private void deleteSelectedNotes() {
+        //delete from db
+        for (int i = 0; i < notesAdapter.getSelectedItemCount(); i++) {
+            tempNoteObj = notesAdapter.get(notesAdapter.getSelectedItems().get(i));
+            allNotesViewerModel.deleteNote(tempNoteObj);
+        }
+        showToast(this, getString(R.string.notes_deleted));
+        resetToolbarIcon();
+        //load fresh data from db
+        loadSavedNotes();
 
     }
 
@@ -169,13 +219,22 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
     public boolean onNoteLongClicked(int position) {
         //toggle this very position
         notesAdapter.toggleSelection(position);
+        if (notesAdapter.isSelected(position)) {
+            selectedNotes.add(notesAdapter.get(position));
+            Log.e("selectedNotes add", "selectedNotes size=" + selectedNotes.size());
+        } else {
+            selectedNotes.remove(notesAdapter.get(position));
+            Log.e("selectedNotes remove", "selectedNotes size=" + selectedNotes.size());
+        }
         //check for selected count and toggle contextual menus acc
         if (notesAdapter.getSelectedItemCount() > 0) {
             if (!contextualDeleteFABShown) {
                 showContextualDeleteMenu();
+                changeToolbarIconTOBack();
             }
         } else {
             resetFABToAdd();
+            resetToolbarIcon();
         }
         return true;
     }
@@ -191,9 +250,17 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
     }
 
     private void showContextualDeleteMenu() {
-
         contextualDeleteFABShown = true;
         AnimationHelper.rotateFABToDelete(activityNotesViewerBinding.addNoteFab);
+    }
+
+    private void resetToolbarIcon() {
+        ObjectAnimator.ofFloat(drawerArrowDrawable, "progress", 0).start();
+        selectedNotes.clear();
+    }
+
+    private void changeToolbarIconTOBack() {
+        ObjectAnimator.ofFloat(drawerArrowDrawable, "progress", 1).start();
     }
 
     @Override

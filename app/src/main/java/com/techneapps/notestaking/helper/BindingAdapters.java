@@ -12,7 +12,7 @@ public class BindingAdapters {
 
     @BindingAdapter(value = "timeStamp")
     public static void setNoteDate(TextView textView, long timeStamp) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM YYYY, hh:mm a", Locale.getDefault());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM YYYY, hh:mm a", Locale.getDefault());
         textView.setText(simpleDateFormat.format(timeStamp));
     }
 }

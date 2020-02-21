@@ -10,7 +10,9 @@
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
     <string name="conf_clear_all_notes">Are you sure you want to delete all saved notes?\nThis action is irreversible.</string>
-    <string name="confirm">Confirm delete</string>
+    <string name="conf_delete_single_note">Are you sure you want to delete the selected saved note?\nThis action is irreversible.</string>
+    <string name="conf_delete_multiple_notes">Are you sure you want to delete the selected saved notes?\nThis action is irreversible.</string>
+    <string name="confirm">Confirm</string>
     <string name="cleared_all_notes">All saved notes cleared</string>
     <string name="title_activity_settings">Settings</string>
 
@@ -32,4 +34,5 @@
     <string name="pro">Pro</string>
     <string name="auto_save_exit">Save note on exit</string>
     <string name="auto_save_exit_desc">Save the note without prompting if the note has title and note both written in it</string>
+    <string name="notes_deleted">Notes deleted</string>
 </resources>

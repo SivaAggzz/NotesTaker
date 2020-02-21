@@ -52,6 +52,9 @@ public class NotesAdapter extends SelectableAdapter<NotesViewHolder> {
 
     }
 
+    public NoteObj get(int position) {
+        return noteObjs.get(position);
+    }
     @Override
     public int getItemCount() {
         return noteObjs.size();
