@@ -1,7 +1,6 @@
 package com.techneapps.notestaking.ui.adapter;
 
 
-import android.net.Uri;
 import android.util.SparseBooleanArray;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,7 +15,7 @@ public abstract class SelectableAdapter<VH extends RecyclerView.ViewHolder> exte
 
     protected SelectableAdapter() {
         selecteditems = new SparseBooleanArray();
-        ArrayList<Uri> myurissharable = new ArrayList<>();
+
 
     }
 

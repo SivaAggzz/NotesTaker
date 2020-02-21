@@ -1,23 +1,27 @@
 package com.techneapps.notestaking.ui.adapter.clickHandler;
 
-import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 
 import com.techneapps.notestaking.data.dao.notes.NoteObj;
-import com.techneapps.notestaking.ui.singlenoteviewer.SingleNoteViewerActivity;
+import com.techneapps.notestaking.providers.interfaces.OnSingleNoteClickListener;
 
 public class SingleNoteClickHandler {
-    private Context context;
+    private OnSingleNoteClickListener onSingleNoteClickListener;
+    private int position;
 
-    public SingleNoteClickHandler(Context context) {
-        this.context = context;
+
+    public SingleNoteClickHandler(OnSingleNoteClickListener onSingleNoteClickListener, int position) {
+        this.onSingleNoteClickListener = onSingleNoteClickListener;
+        this.position = position;
     }
 
-    public void viewNote(View view, NoteObj noteObj) {
-        //start new activity with the appropriate note to view it
-        Intent viewSavedNoteIntent = new Intent(context, SingleNoteViewerActivity.class);
-        viewSavedNoteIntent.putExtra("savedNote", noteObj);
-        context.startActivity(viewSavedNoteIntent);
+    public void onNoteClicked(View view, NoteObj noteObj) {
+        onSingleNoteClickListener.onNoteClicked(noteObj, position);
     }
+
+    public boolean onNoteLongClicked(View view) {
+        return onSingleNoteClickListener.onNoteLongClicked(position);
+
+    }
+
 }

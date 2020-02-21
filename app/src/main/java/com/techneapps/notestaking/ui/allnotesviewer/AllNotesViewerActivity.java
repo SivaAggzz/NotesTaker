@@ -18,9 +18,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.techneapps.notestaking.R;
 import com.techneapps.notestaking.data.dao.notes.NoteObj;
 import com.techneapps.notestaking.databinding.ActivityAllNotesViewerBinding;
+import com.techneapps.notestaking.helper.AnimationHelper;
 import com.techneapps.notestaking.helper.SortingHelper;
+import com.techneapps.notestaking.providers.interfaces.OnSingleNoteClickListener;
 import com.techneapps.notestaking.ui.adapter.NotesAdapter;
 import com.techneapps.notestaking.ui.addnote.AddNewNoteActivity;
+import com.techneapps.notestaking.ui.singlenoteviewer.SingleNoteViewerActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,7 +31,7 @@ import java.util.Collections;
 import static com.techneapps.notestaking.helper.MustMethods.showBeautifiedDialog;
 import static com.techneapps.notestaking.helper.MustMethods.showToast;
 
-public class AllNotesViewerActivity extends AppCompatActivity {
+public class AllNotesViewerActivity extends AppCompatActivity implements OnSingleNoteClickListener {
 
     private AllNotesViewerModel allNotesViewerModel;
     private ActivityAllNotesViewerBinding activityNotesViewerBinding;
@@ -120,4 +123,39 @@ public class AllNotesViewerActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onNoteClicked(NoteObj noteObj, int position) {
+        //check if any note is previously selected
+        if (notesAdapter.getSelectedItemCount() > 0) {
+            onNoteLongClicked(position);
+        } else {
+            //no item selected -> so normal click method
+            //start new activity with the appropriate note to view it
+            Intent viewSavedNoteIntent = new Intent(this, SingleNoteViewerActivity.class);
+            viewSavedNoteIntent.putExtra("savedNote", noteObj);
+            startActivity(viewSavedNoteIntent);
+        }
+
+    }
+
+    @Override
+    public boolean onNoteLongClicked(int position) {
+        //toggle this very position
+        notesAdapter.toggleSelection(position);
+        //check for selected count and toggle contextual menus acc
+        if (notesAdapter.getSelectedItemCount() > 0) {
+            showContextualMenu();
+        } else {
+            hideContextualMenu();
+        }
+        return false;
+    }
+
+    private void hideContextualMenu() {
+        AnimationHelper.rotateFABBackward(activityNotesViewerBinding.addNoteFab);
+    }
+
+    private void showContextualMenu() {
+        AnimationHelper.rotateFABForward(activityNotesViewerBinding.addNoteFab);
+    }
 }

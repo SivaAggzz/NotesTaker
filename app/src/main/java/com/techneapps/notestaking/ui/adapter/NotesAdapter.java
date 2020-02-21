@@ -1,46 +1,70 @@
 package com.techneapps.notestaking.ui.adapter;
 
-import android.content.Context;
+import android.graphics.Color;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.techneapps.notestaking.R;
 import com.techneapps.notestaking.data.dao.notes.NoteObj;
 import com.techneapps.notestaking.databinding.SingleListNoteBinding;
 import com.techneapps.notestaking.ui.adapter.clickHandler.SingleNoteClickHandler;
 import com.techneapps.notestaking.ui.adapter.viewholder.NotesViewHolder;
+import com.techneapps.notestaking.ui.allnotesviewer.AllNotesViewerActivity;
 
 import java.util.ArrayList;
 
-public class NotesAdapter extends RecyclerView.Adapter<NotesViewHolder> {
-    private Context context;
+public class NotesAdapter extends SelectableAdapter<NotesViewHolder> {
+    private final TypedValue outValue;
     private ArrayList<NoteObj> noteObjs;
+    private AllNotesViewerActivity allNotesViewerActivity;
 
-    public NotesAdapter(Context context, ArrayList<NoteObj> noteObjs) {
-        this.context = context;
+    public NotesAdapter(AllNotesViewerActivity allNotesViewerActivity, ArrayList<NoteObj> noteObjs) {
+        this.allNotesViewerActivity = allNotesViewerActivity;
         this.noteObjs = noteObjs;
+        setHasStableIds(true);
+        outValue = new TypedValue();
+        allNotesViewerActivity.getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+
     }
 
     @NonNull
     @Override
     public NotesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         SingleListNoteBinding singleListNoteBinding = DataBindingUtil
-                .inflate(LayoutInflater.from(context), R.layout.single_list_note, parent, false);
+                .inflate(LayoutInflater.from(allNotesViewerActivity), R.layout.single_list_note, parent, false);
         return new NotesViewHolder(singleListNoteBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull NotesViewHolder notesViewHolder, int position) {
         notesViewHolder.singleListNoteBinding.setNote(noteObjs.get(position));
-        notesViewHolder.singleListNoteBinding.setClickHandler(new SingleNoteClickHandler(context));
+        notesViewHolder.singleListNoteBinding.setClickHandler(new SingleNoteClickHandler(allNotesViewerActivity, position));
+        if (getSelectedItems().contains(position)) {
+            notesViewHolder.singleListNoteBinding.getRoot().setBackgroundColor(Color.parseColor("#012131"));
+        } else {
+            notesViewHolder.singleListNoteBinding.getRoot().setBackgroundResource(outValue.resourceId);
+        }
+
     }
 
     @Override
     public int getItemCount() {
         return noteObjs.size();
     }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+
 }
