@@ -26,6 +26,7 @@ import com.techneapps.notestaking.providers.interfaces.OnSwipeListener;
 import com.techneapps.notestaking.ui.adapter.NotesAdapter;
 import com.techneapps.notestaking.ui.adapter.swipelistener.SwipeListener;
 import com.techneapps.notestaking.ui.addnote.AddNewNoteActivity;
+import com.techneapps.notestaking.ui.pref.SettingsActivity;
 import com.techneapps.notestaking.ui.singlenoteviewer.SingleNoteViewerActivity;
 
 import java.util.ArrayList;
@@ -71,10 +72,11 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
     }
 
     private void loadSavedNotes() {
+        SwipeListener swipeListener = new SwipeListener(AllNotesViewerActivity.this);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeListener);
+        itemTouchHelper.attachToRecyclerView(activityNotesViewerBinding.notesRecyclerView);
+
         allNotesViewerModel.getNoteObjects().observe(this, noteObjs -> {
-            SwipeListener swipeListener = new SwipeListener(AllNotesViewerActivity.this);
-            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeListener);
-            itemTouchHelper.attachToRecyclerView(activityNotesViewerBinding.notesRecyclerView);
             activityNotesViewerBinding.notesRecyclerView.setLayoutManager(new LinearLayoutManager(AllNotesViewerActivity.this));
             Collections.sort(noteObjs, new SortingHelper.sortByDate());
             setAdapter(noteObjs);
@@ -92,6 +94,8 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.clearAllNotes) {
             clearAllNotes();
+        } else if (item.getItemId() == R.id.settings) {
+            startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

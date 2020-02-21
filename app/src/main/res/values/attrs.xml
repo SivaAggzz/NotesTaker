@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="PrefSwitchView">
+        <attr name="switchTitle" format="string" />
+        <attr name="switchSummary" format="string" />
+        <attr name="switchChecked" format="boolean" />
+        <attr name="switchProTag" format="boolean" />
+    </declare-styleable>
+</resources>

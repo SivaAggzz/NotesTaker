@@ -1,8 +1,10 @@
 package com.techneapps.notestaking.ui.adapter.swipelistener;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -58,5 +60,12 @@ public class SwipeListener extends ItemTouchHelper.Callback {
         return super.convertToAbsoluteDirection(flags, layoutDirection);
     }
 
+    @Override
+    public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+        super.onChildDraw(c, recyclerView, viewHolder, dX,
+                dY, actionState, isCurrentlyActive);
+        View itemView = viewHolder.itemView;
+        int backgroundCornerOffset = 20;
+    }
 
 }
