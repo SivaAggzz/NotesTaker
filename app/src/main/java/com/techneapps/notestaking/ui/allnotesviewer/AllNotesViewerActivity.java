@@ -226,6 +226,12 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
         }
         //check for selected count and toggle contextual menus acc
         if (notesAdapter.getSelectedItemCount() > 0) {
+
+            if (notesAdapter.getSelectedItemCount() == 1) {
+                getSupportActionBar().setTitle(notesAdapter.getSelectedItemCount() + " note selected");
+            } else {
+                getSupportActionBar().setTitle(notesAdapter.getSelectedItemCount() + " notes selected");
+            }
             if (!contextualDeleteFABShown) {
                 showContextualDeleteMenu();
                 changeToolbarIconTOBack();
@@ -254,6 +260,7 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
     private void resetToolbarIcon() {
         ObjectAnimator.ofFloat(drawerArrowDrawable, "progress", 0).start();
         selectedNotes.clear();
+        getSupportActionBar().setTitle(getString(R.string.app_name));
     }
 
     private void changeToolbarIconTOBack() {

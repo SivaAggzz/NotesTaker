@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Notes Stack</string>
+    <string name="app_name">Notes Taker</string>
     <string name="title">Title</string>
     <string name="note">Note</string>
     <string name="date">Date</string>
