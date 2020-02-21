@@ -41,13 +41,14 @@ public class NotesAdapter extends SelectableAdapter<NotesViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull NotesViewHolder notesViewHolder, int position) {
-        notesViewHolder.singleListNoteBinding.setNote(noteObjs.get(position));
-        notesViewHolder.singleListNoteBinding.setClickHandler(new SingleNoteClickHandler(allNotesViewerActivity, position));
         if (getSelectedItems().contains(position)) {
             notesViewHolder.singleListNoteBinding.getRoot().setBackgroundColor(Color.parseColor("#012131"));
         } else {
             notesViewHolder.singleListNoteBinding.getRoot().setBackgroundResource(outValue.resourceId);
         }
+        notesViewHolder.singleListNoteBinding.setNote(noteObjs.get(position));
+        notesViewHolder.singleListNoteBinding.setClickHandler(new SingleNoteClickHandler(allNotesViewerActivity, position));
+
 
     }
 

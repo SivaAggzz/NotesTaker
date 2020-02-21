@@ -5,13 +5,11 @@ import android.util.SparseBooleanArray;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class SelectableAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
     private SparseBooleanArray selecteditems;
-    private ArrayList<File> myfiles;
 
     protected SelectableAdapter() {
         selecteditems = new SparseBooleanArray();

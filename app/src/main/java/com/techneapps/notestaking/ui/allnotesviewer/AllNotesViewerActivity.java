@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.techneapps.notestaking.R;
@@ -21,7 +22,9 @@ import com.techneapps.notestaking.databinding.ActivityAllNotesViewerBinding;
 import com.techneapps.notestaking.helper.AnimationHelper;
 import com.techneapps.notestaking.helper.SortingHelper;
 import com.techneapps.notestaking.providers.interfaces.OnSingleNoteClickListener;
+import com.techneapps.notestaking.providers.interfaces.OnSwipeListener;
 import com.techneapps.notestaking.ui.adapter.NotesAdapter;
+import com.techneapps.notestaking.ui.adapter.swipelistener.SwipeListener;
 import com.techneapps.notestaking.ui.addnote.AddNewNoteActivity;
 import com.techneapps.notestaking.ui.singlenoteviewer.SingleNoteViewerActivity;
 
@@ -31,7 +34,7 @@ import java.util.Collections;
 import static com.techneapps.notestaking.helper.MustMethods.showBeautifiedDialog;
 import static com.techneapps.notestaking.helper.MustMethods.showToast;
 
-public class AllNotesViewerActivity extends AppCompatActivity implements OnSingleNoteClickListener {
+public class AllNotesViewerActivity extends AppCompatActivity implements OnSingleNoteClickListener, OnSwipeListener {
 
     private AllNotesViewerModel allNotesViewerModel;
     private ActivityAllNotesViewerBinding activityNotesViewerBinding;
@@ -57,6 +60,9 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
         //color NavigationBarColor to match UI
         getWindow().setNavigationBarColor(getResources().getColor(R.color.md_grey_900));
         allNotesViewerModel.getNoteObjects().observe(this, noteObjs -> {
+            SwipeListener swipeListener = new SwipeListener(AllNotesViewerActivity.this);
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeListener);
+            itemTouchHelper.attachToRecyclerView(activityNotesViewerBinding.notesRecyclerView);
             activityNotesViewerBinding.notesRecyclerView.setLayoutManager(new LinearLayoutManager(AllNotesViewerActivity.this));
             Collections.sort(noteObjs, new SortingHelper.sortByDate());
             setAdapter(noteObjs);
@@ -81,6 +87,11 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
 
     @Override
     public void onBackPressed() {
+        if (notesAdapter.getSelectedItemCount() > 0) {
+            hideContextualMenu();
+            return;
+        }
+
         //method to double tap to exit from home
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
@@ -148,14 +159,28 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
         } else {
             hideContextualMenu();
         }
-        return false;
+        return true;
     }
 
     private void hideContextualMenu() {
+        if (notesAdapter.getSelectedItemCount() > 0) {
+            notesAdapter.clearSelection();
+        }
         AnimationHelper.rotateFABBackward(activityNotesViewerBinding.addNoteFab);
     }
 
     private void showContextualMenu() {
         AnimationHelper.rotateFABForward(activityNotesViewerBinding.addNoteFab);
+    }
+
+    @Override
+    public void onSwipedLeft() {
+        showToast(this, "onSwipedLeft");
+    }
+
+    @Override
+    public void onSwipedRight() {
+        showToast(this, "onSwipedRight");
+
     }
 }
