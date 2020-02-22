@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ import com.techneapps.notestaking.ui.pref.SettingsActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 import static com.techneapps.notestaking.helper.MustMethods.showBeautifiedDialog;
 import static com.techneapps.notestaking.helper.MustMethods.showToast;
@@ -193,8 +195,12 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
         activityNotesViewerBinding.notesRecyclerView.setAdapter(notesAdapter);
         if (noteObjs.size() > 0) {
             //hide no notes UI
+            activityNotesViewerBinding.noNotesUI.setVisibility(View.GONE);
+            activityNotesViewerBinding.notesRecyclerView.setVisibility(View.VISIBLE);
         } else {
             //show no notes UI
+            activityNotesViewerBinding.notesRecyclerView.setVisibility(View.GONE);
+            activityNotesViewerBinding.noNotesUI.setVisibility(View.VISIBLE);
         }
     }
 
@@ -228,9 +234,9 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
         if (notesAdapter.getSelectedItemCount() > 0) {
 
             if (notesAdapter.getSelectedItemCount() == 1) {
-                getSupportActionBar().setTitle(notesAdapter.getSelectedItemCount() + " note selected");
+                Objects.requireNonNull(getSupportActionBar()).setTitle(notesAdapter.getSelectedItemCount() + " note selected");
             } else {
-                getSupportActionBar().setTitle(notesAdapter.getSelectedItemCount() + " notes selected");
+                Objects.requireNonNull(getSupportActionBar()).setTitle(notesAdapter.getSelectedItemCount() + " notes selected");
             }
             if (!contextualDeleteFABShown) {
                 showContextualDeleteMenu();
@@ -260,7 +266,7 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
     private void resetToolbarIcon() {
         ObjectAnimator.ofFloat(drawerArrowDrawable, "progress", 0).start();
         selectedNotes.clear();
-        getSupportActionBar().setTitle(getString(R.string.app_name));
+        Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.app_name));
     }
 
     private void changeToolbarIconTOBack() {

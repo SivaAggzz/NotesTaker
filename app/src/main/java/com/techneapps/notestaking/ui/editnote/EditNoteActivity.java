@@ -3,7 +3,6 @@ package com.techneapps.notestaking.ui.editnote;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -48,7 +47,6 @@ public class EditNoteActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (isNoteChanged()) {
             if (validateNoteFields()) {
-                Toast.makeText(this, "updateNote", Toast.LENGTH_SHORT).show();
                 editNoteModel.updateNote(getUpdatedNoteObj());
             }
         }

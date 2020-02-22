@@ -27,7 +27,7 @@
 
             </com.google.android.material.appbar.AppBarLayout>
 
-            <RelativeLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -36,7 +36,38 @@
                     android:id="@+id/notesRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
-            </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/noNotesUI"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/noNotesIcon"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_centerInParent="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/no_notes_icon"
+                        android:src="@drawable/ic_assignment_grey_500_48dp" />
+
+
+                    <TextView
+                        style="@style/TextAppearance.AppCompat.Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/noNotesIcon"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="40sp"
+                        android:layout_marginEnd="40sp"
+                        android:gravity="center"
+                        android:text="@string/no_notes_desc"
+                        android:textColor="@color/md_grey_500"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+            </FrameLayout>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/addNoteFab"

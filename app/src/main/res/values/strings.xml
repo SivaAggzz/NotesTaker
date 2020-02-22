@@ -35,4 +35,6 @@
     <string name="auto_save_exit">Save note on exit</string>
     <string name="auto_save_exit_desc">Save the note without prompting if the note has title and note both written in it</string>
     <string name="notes_deleted">Notes deleted</string>
+    <string name="no_notes_desc">Saved notes will show up here.\nTap the + button to add your first note!</string>
+    <string name="no_notes_icon">no notes icon</string>
 </resources>
