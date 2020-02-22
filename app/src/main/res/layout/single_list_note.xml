@@ -6,11 +6,11 @@
 
         <variable
             name="clickHandler"
-            type="com.techneapps.notestaking.view.viewnote.allnotes.adapter.clickHandler.SingleNoteClickHandler" />
+            type="com.techneapps.notestaking.view.adapters.clickHandler.SingleNoteClickHandler" />
 
         <variable
             name="note"
-            type="com.techneapps.notestaking.data.NoteObj" />
+            type="com.techneapps.notestaking.database.models.NoteObj" />
     </data>
 
     <RelativeLayout

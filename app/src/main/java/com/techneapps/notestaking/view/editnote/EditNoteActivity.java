@@ -12,11 +12,11 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.room.Room;
 
 import com.techneapps.notestaking.R;
-import com.techneapps.notestaking.data.NoteObj;
-import com.techneapps.notestaking.data.local.NotesRepo;
+import com.techneapps.notestaking.database.NotesDatabase;
+import com.techneapps.notestaking.database.models.NoteObj;
 import com.techneapps.notestaking.databinding.ActivityNoteEditorBinding;
 import com.techneapps.notestaking.util.viewmodelfactory.NotesViewModelFactory;
-import com.techneapps.notestaking.viewmodel.NotesViewModel;
+import com.techneapps.notestaking.viewModel.NotesViewModel;
 
 import java.util.Objects;
 
@@ -24,21 +24,21 @@ public class EditNoteActivity extends AppCompatActivity {
 
     private ActivityNoteEditorBinding activityNoteEditorBinding;
     private NotesViewModel notesViewModel;
-    private NotesRepo notesRepo;
+    private NotesDatabase notesDatabase;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityNoteEditorBinding =
-                DataBindingUtil.setContentView(this, R.layout.activity_note_editor);
-        notesRepo = Room.databaseBuilder(this, NotesRepo.class, "notes.db").build();
+        activityNoteEditorBinding = DataBindingUtil.setContentView(this, R.layout.activity_note_editor);
+        initializeView();
+    }
 
-        notesViewModel = ViewModelProviders.of(this, new NotesViewModelFactory(notesRepo))
-                .get(NotesViewModel.class);
-        activityNoteEditorBinding.setNote(getIncomingNote());
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("");
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //color NavigationBarColor to match UI
+        getWindow().setNavigationBarColor(getResources().getColor(R.color.md_grey_900));
+
     }
 
     @Override
@@ -50,7 +50,6 @@ public class EditNoteActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public void onBackPressed() {
         if (isNoteChanged()) {
@@ -59,8 +58,23 @@ public class EditNoteActivity extends AppCompatActivity {
             }
         }
         super.onBackPressed();
-
     }
+
+    //initialization methods
+    private void initializeView() {
+        notesDatabase = Room.databaseBuilder(this, NotesDatabase.class, "notes.db").build();
+        activityNoteEditorBinding.setNote(getIncomingNote());
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
+        initializeViewModels();
+    }
+
+    private void initializeViewModels() {
+        notesViewModel = ViewModelProviders.of(this, new NotesViewModelFactory(notesDatabase))
+                .get(NotesViewModel.class);
+    }
+
 
     private NoteObj getUpdatedNoteObj() {
         NoteObj noteObj = getIncomingNote();
@@ -69,7 +83,6 @@ public class EditNoteActivity extends AppCompatActivity {
         noteObj.setTimeStamp(System.currentTimeMillis());
         return noteObj;
     }
-
 
     private boolean validateNoteFields() {
         //validate title edit text
@@ -92,15 +105,6 @@ public class EditNoteActivity extends AppCompatActivity {
                         .trim()
                         .equalsIgnoreCase(activityNoteEditorBinding.titleEditText.getText().toString().trim());
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //color NavigationBarColor to match UI
-        getWindow().setNavigationBarColor(getResources().getColor(R.color.md_grey_900));
-
-    }
-
 
     private NoteObj getIncomingNote() {
         return (NoteObj) getIntent().getSerializableExtra("savedNote");

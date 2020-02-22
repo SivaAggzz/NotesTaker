@@ -17,17 +17,22 @@ import android.widget.Toast;
 import androidx.cardview.widget.CardView;
 
 import com.techneapps.notestaking.R;
-import com.techneapps.notestaking.data.NoteObj;
-import com.techneapps.notestaking.view.editnote.EditNoteActivity;
+import com.techneapps.notestaking.database.models.NoteObj;
 
 import java.util.Objects;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 public class MustMethods {
-    public static Dialog showBeautifiedDialog(Context context, String body) {
+    public static Dialog showBeautifiedDialog(Context context, String body, String title) {
         Dialog beautifiedDialog = new Dialog(context, R.style.AppThemeDark_Dialog);
         beautifiedDialog.setContentView(R.layout.beautified_dialog);
-        TextView text = beautifiedDialog.findViewById(R.id.text);
-        text.setText(body);
+        TextView bodyText = beautifiedDialog.findViewById(R.id.text);
+        bodyText.setText(body);
+
+        TextView titleText = beautifiedDialog.findViewById(R.id.title);
+        titleText.setText(title);
+
 
         Button cancelBtn = beautifiedDialog.findViewById(R.id.cancelBtn);
         cancelBtn.setOnClickListener(view -> beautifiedDialog.dismiss());
@@ -41,10 +46,17 @@ public class MustMethods {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
-    public static void startActivityWithExtra(Context context, NoteObj noteObj) {
-        Intent viewSavedNoteIntent = new Intent(context, EditNoteActivity.class);
-        viewSavedNoteIntent.putExtra("savedNote", noteObj);
-        context.startActivity(viewSavedNoteIntent);
+    public static void startActivityWithExtra(Context context, NoteObj noteObj, Class className) {
+        Intent newActivityIntentWithExtra = new Intent(context, className);
+        newActivityIntentWithExtra.setFlags(FLAG_ACTIVITY_NEW_TASK);
+        newActivityIntentWithExtra.putExtra("savedNote", noteObj);
+        context.startActivity(newActivityIntentWithExtra);
+    }
+
+    public static void startActivity(Context context, Class className) {
+        Intent newActivityIntent = new Intent(context, className);
+        newActivityIntent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(newActivityIntent);
     }
 
     public static void vibrateDevice(View view) {

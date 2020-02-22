@@ -6,7 +6,7 @@
 
         <variable
             name="note"
-            type="com.techneapps.notestaking.data.NoteObj" />
+            type="com.techneapps.notestaking.database.models.NoteObj" />
     </data>
 
     <LinearLayout

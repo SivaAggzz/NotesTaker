@@ -1,4 +1,4 @@
-package com.techneapps.notestaking.view.viewnote.allnotes.adapter.viewholder;
+package com.techneapps.notestaking.view.adapters.viewholder;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;

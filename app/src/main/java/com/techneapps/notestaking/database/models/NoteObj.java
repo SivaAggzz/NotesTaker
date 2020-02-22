@@ -1,4 +1,4 @@
-package com.techneapps.notestaking.data;
+package com.techneapps.notestaking.database.models;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;

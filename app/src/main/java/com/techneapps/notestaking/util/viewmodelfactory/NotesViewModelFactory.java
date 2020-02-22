@@ -4,14 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.techneapps.notestaking.data.local.NotesRepo;
-import com.techneapps.notestaking.viewmodel.NotesViewModel;
+import com.techneapps.notestaking.database.NotesDatabase;
+import com.techneapps.notestaking.viewModel.NotesViewModel;
 
 public class NotesViewModelFactory extends ViewModelProvider.NewInstanceFactory {
-    private NotesRepo notesDatabases;
+    private NotesDatabase notesDatabase;
 
-    public NotesViewModelFactory(NotesRepo... notesRepos) {
-        this.notesDatabases = notesRepos[0];
+    public NotesViewModelFactory(NotesDatabase notesDatabase) {
+        this.notesDatabase = notesDatabase;
     }
 
 
@@ -21,7 +21,7 @@ public class NotesViewModelFactory extends ViewModelProvider.NewInstanceFactory 
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass == NotesViewModel.class) {
-            return (T) new NotesViewModel(notesDatabases);
+            return (T) new NotesViewModel(notesDatabase);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

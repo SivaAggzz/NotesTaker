@@ -1,53 +1,55 @@
-package com.techneapps.notestaking.viewmodel;
+package com.techneapps.notestaking.repositories;
+
+import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.techneapps.notestaking.data.NoteObj;
-import com.techneapps.notestaking.data.local.NotesRepo;
-import com.techneapps.notestaking.view.addnote.OnNoteSavedListener;
+import com.techneapps.notestaking.database.NotesDatabase;
+import com.techneapps.notestaking.database.models.NoteObj;
+import com.techneapps.notestaking.view.listener.OnNoteSavedListener;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class NotesViewModel extends ViewModel {
+public class NotesRepository {
     //Data to provide to View
-    private MutableLiveData<ArrayList<NoteObj>> noteObjects;
-    //Our Repo is NotesRepo
-    private NotesRepo notesRepo;
+    private MutableLiveData<List<NoteObj>> noteObjects;
+    //Data source
+    private NotesDatabase notesDatabase;
 
-
-    public NotesViewModel(NotesRepo notesRepo) {
-        this.notesRepo = notesRepo;
+    public NotesRepository(NotesDatabase notesDatabase) {
+        this.notesDatabase = notesDatabase;
     }
 
-    public MutableLiveData<ArrayList<NoteObj>> getNoteObjects() {
+    //method to return saved notes
+    public MutableLiveData<List<NoteObj>> getNoteObjects() {
         if (noteObjects == null) {
             noteObjects = new MutableLiveData<>();
-            return getAllSavedNotesThread();
         }
-        return noteObjects;
+        return getAllSavedNotesThread();
     }
 
     //method to get saved note from Room database by using RXJava
-    private MutableLiveData<ArrayList<NoteObj>> getAllSavedNotesThread() {
+    private MutableLiveData<List<NoteObj>> getAllSavedNotesThread() {
+        Log.e(getClass().getSimpleName(), "getAllSavedNotesThread");
         CompositeDisposable compositeDisposable = new CompositeDisposable();
-        compositeDisposable.add(Observable.fromCallable(() -> notesRepo.getNotesDao().getNotes())
+        compositeDisposable.add(Observable.fromCallable(() -> notesDatabase.getNotesDao().getNotes())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((result) -> noteObjects.setValue(new ArrayList<>(result))));
+                .subscribe((result) -> noteObjects.setValue(result)));
         return noteObjects;
     }
 
     //method to delete all saved notes from Room database by using RXJava
     public void clearNotesObjects() {
+        Log.e(getClass().getSimpleName(), "clearNotesObjects");
         CompositeDisposable compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(Observable.fromCallable(() -> {
-            notesRepo.clearAllTables();
+            notesDatabase.clearAllTables();
             return true;
         })
                 .subscribeOn(Schedulers.io())
@@ -58,9 +60,10 @@ public class NotesViewModel extends ViewModel {
 
     //method to delete a saved note from Room database by using RXJava
     public void deleteNote(NoteObj noteObj) {
+        Log.e(getClass().getSimpleName(), "deleteNote");
         CompositeDisposable compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(Observable.fromCallable(() -> {
-            notesRepo.getNotesDao().deleteNote(noteObj);
+            notesDatabase.getNotesDao().deleteNote(noteObj);
             return true;
         })
                 .subscribeOn(Schedulers.io())
@@ -71,9 +74,10 @@ public class NotesViewModel extends ViewModel {
 
     //method to save note to Room database by using RXJava
     public void updateNote(NoteObj noteObj) {
+        Log.e(getClass().getSimpleName(), "updateNote");
         CompositeDisposable compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(Observable.fromCallable(() -> {
-            notesRepo.getNotesDao().updateNote(noteObj);
+            notesDatabase.getNotesDao().updateNote(noteObj);
             return true;
         })
                 .subscribeOn(Schedulers.io())
@@ -85,13 +89,16 @@ public class NotesViewModel extends ViewModel {
 
     //method to add note to Room database by using RXJava
     public void addNote(NoteObj noteObj, OnNoteSavedListener onNoteSavedListener) {
+        Log.e(getClass().getSimpleName(), "addNote");
         CompositeDisposable compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(Observable.fromCallable(() -> {
-            notesRepo.getNotesDao().addNote(noteObj);
+            notesDatabase.getNotesDao().addNote(noteObj);
             return true;
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((result) -> onNoteSavedListener.OnNoteSaved()));
     }
+
+
 }

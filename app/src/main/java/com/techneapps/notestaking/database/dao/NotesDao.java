@@ -1,4 +1,4 @@
-package com.techneapps.notestaking.data.local;
+package com.techneapps.notestaking.database.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.techneapps.notestaking.data.NoteObj;
+import com.techneapps.notestaking.database.models.NoteObj;
 
 import java.util.List;
 

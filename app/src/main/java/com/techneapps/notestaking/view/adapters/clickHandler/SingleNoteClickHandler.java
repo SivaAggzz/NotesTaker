@@ -1,9 +1,9 @@
-package com.techneapps.notestaking.view.viewnote.allnotes.adapter.clickHandler;
+package com.techneapps.notestaking.view.adapters.clickHandler;
 
 import android.view.View;
 
-import com.techneapps.notestaking.data.NoteObj;
-import com.techneapps.notestaking.view.viewnote.allnotes.OnSingleNoteClickListener;
+import com.techneapps.notestaking.database.models.NoteObj;
+import com.techneapps.notestaking.view.listener.OnSingleNoteClickListener;
 
 public class SingleNoteClickHandler {
     private OnSingleNoteClickListener onSingleNoteClickListener;

@@ -1,4 +1,4 @@
-package com.techneapps.notestaking.view.viewnote.allnotes.adapter;
+package com.techneapps.notestaking.view.adapters;
 
 import android.graphics.Color;
 import android.util.TypedValue;
@@ -9,21 +9,21 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 
 import com.techneapps.notestaking.R;
-import com.techneapps.notestaking.data.NoteObj;
+import com.techneapps.notestaking.database.models.NoteObj;
 import com.techneapps.notestaking.databinding.SingleListNoteBinding;
 import com.techneapps.notestaking.util.selectableadapter.SelectableAdapter;
+import com.techneapps.notestaking.view.adapters.clickHandler.SingleNoteClickHandler;
+import com.techneapps.notestaking.view.adapters.viewholder.NotesViewHolder;
 import com.techneapps.notestaking.view.viewnote.allnotes.AllNotesViewerActivity;
-import com.techneapps.notestaking.view.viewnote.allnotes.adapter.clickHandler.SingleNoteClickHandler;
-import com.techneapps.notestaking.view.viewnote.allnotes.adapter.viewholder.NotesViewHolder;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class NotesAdapter extends SelectableAdapter<NotesViewHolder> {
     private final TypedValue outValue;
-    private ArrayList<NoteObj> noteObjs;
+    private List<NoteObj> noteObjs;
     private AllNotesViewerActivity allNotesViewerActivity;
 
-    public NotesAdapter(AllNotesViewerActivity allNotesViewerActivity, ArrayList<NoteObj> noteObjs) {
+    public NotesAdapter(AllNotesViewerActivity allNotesViewerActivity, List<NoteObj> noteObjs) {
         this.allNotesViewerActivity = allNotesViewerActivity;
         this.noteObjs = noteObjs;
         setHasStableIds(true);
@@ -49,14 +49,19 @@ public class NotesAdapter extends SelectableAdapter<NotesViewHolder> {
         }
         notesViewHolder.singleListNoteBinding.setNote(noteObjs.get(position));
         notesViewHolder.singleListNoteBinding.setClickHandler(new SingleNoteClickHandler(allNotesViewerActivity, position));
-
-
     }
 
+    public void removeSelectedItems() {
+        for (int i = 0; i < getSelectedItemCount(); i++) {
+            removeItem(getSelectedItems().get(i));
+        }
+    }
     public void removeItem(int position) {
         noteObjs.remove(position);
         notifyItemRemoved(position);
     }
+
+
     public NoteObj get(int position) {
         return noteObjs.get(position);
     }

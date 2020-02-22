@@ -1,6 +1,6 @@
 package com.techneapps.notestaking.util;
 
-import com.techneapps.notestaking.data.NoteObj;
+import com.techneapps.notestaking.database.models.NoteObj;
 
 import java.util.Comparator;
 
