@@ -6,13 +6,12 @@
 
         <variable
             name="clickHandler"
-            type="com.techneapps.notestaking.ui.adapter.clickHandler.SingleNoteClickHandler" />
+            type="com.techneapps.notestaking.view.viewnote.allnotes.adapter.clickHandler.SingleNoteClickHandler" />
 
         <variable
             name="note"
-            type="com.techneapps.notestaking.data.dao.notes.NoteObj" />
+            type="com.techneapps.notestaking.data.NoteObj" />
     </data>
-
 
     <RelativeLayout
         android:background="?android:attr/selectableItemBackground"

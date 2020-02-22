@@ -6,7 +6,7 @@
 
         <variable
             name="note"
-            type="com.techneapps.notestaking.data.dao.notes.NoteObj" />
+            type="com.techneapps.notestaking.data.NoteObj" />
     </data>
 
     <LinearLayout

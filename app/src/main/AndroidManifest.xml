@@ -14,10 +14,10 @@
         android:theme="@style/AppThemeDark"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ui.pref.SettingsActivity"
+            android:name=".view.settings.SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity
-            android:name=".ui.splash.SplashActivity"
+            android:name=".view.splash.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,12 +26,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.allnotesviewer.AllNotesViewerActivity"
+            android:name=".view.viewnote.allnotes.AllNotesViewerActivity"
             android:label="@string/app_name"
             android:theme="@style/AppThemeDark.NoActionBar" />
-        <activity android:name=".ui.addnote.AddNewNoteActivity" />
-        <activity android:name=".ui.singlenoteviewer.SingleNoteViewerActivity" />
-        <activity android:name=".ui.editnote.EditNoteActivity" />
+        <activity android:name=".view.addnote.AddNewNoteActivity" />
+        <activity android:name=".view.viewnote.singlenote.SingleNoteViewerActivity" />
+        <activity android:name=".view.editnote.EditNoteActivity" />
     </application>
 
 </manifest>

@@ -1,0 +1,19 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.techneapps.notestaking.util.preference.prefwidgets.switchview.PrefSwitchView
+            android:id="@+id/enableSaveOnExit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:switchChecked="true"
+            app:switchSummary="@string/auto_save_exit_desc"
+            app:switchTitle="@string/auto_save_exit" />
+
+
+    </LinearLayout>
+</layout>
