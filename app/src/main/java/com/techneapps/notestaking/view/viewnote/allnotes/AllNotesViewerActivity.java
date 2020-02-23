@@ -56,7 +56,7 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
 
     private boolean doubleBackToExitPressedOnce = false;
     private boolean contextualDeleteFABShown = false;
-
+    private Menu myMenu;
 
 
 
@@ -77,6 +77,7 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.myMenu = menu;
         getMenuInflater().inflate(R.menu.all_notes_activity, menu);
         return true;
     }
@@ -135,6 +136,7 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
             if (!contextualDeleteFABShown) {
                 animateFABToDelete();
                 animateToolbarIconToSelected();
+                hideMenuItems();
             }
         } else {
             animateFABToAdd();
@@ -164,7 +166,7 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
     private void initializeView() {
         setSupportActionBar(activityNotesViewerBinding.toolbar);
         drawerArrowDrawable = new DrawerArrowDrawable(this);
-        drawerArrowDrawable.setColor(getResources().getColor(R.color.md_blue_600));
+        drawerArrowDrawable.setColor(getResources().getColor(R.color.md_white_1000));
         activityNotesViewerBinding.toolbar.setNavigationIcon(drawerArrowDrawable);
 
         activityNotesViewerBinding.swipeRefreshRootLayout.setOnRefreshListener(this::onSwipeRefreshLayout);
@@ -184,6 +186,17 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
 
     private void initializeFAB() {
         activityNotesViewerBinding.addNoteFab.setOnClickListener(v -> onFABClicked());
+    }
+
+    //menu methods
+    private void hideMenuItems() {
+        myMenu.getItem(0).setVisible(false);
+        myMenu.getItem(1).setVisible(false);
+    }
+
+    private void showMenuItems() {
+        myMenu.getItem(0).setVisible(true);
+        myMenu.getItem(1).setVisible(true);
     }
 
 
@@ -235,6 +248,7 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
             notesAdapter.clearSelection();
         }
         AnimationHelper.rotateFABToAdd(activityNotesViewerBinding.addNoteFab);
+        showMenuItems();
         contextualDeleteFABShown = false;
 
     }
