@@ -51,13 +51,13 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
 
     private Handler handler;
 
-    private ArrayList<NoteObj> selectedNotes = new ArrayList<>();
     private DrawerArrowDrawable drawerArrowDrawable;
 
     private boolean doubleBackToExitPressedOnce = false;
     private boolean contextualDeleteFABShown = false;
     private Menu myMenu;
-
+    private boolean showConfirmMultipleDeleteDialogShown = false;
+    private boolean showClearAllNotesConfirmationShown = false;
 
 
     @Override
@@ -66,6 +66,25 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
         activityNotesViewerBinding = DataBindingUtil.setContentView(this, R.layout.activity_all_notes_viewer);
         initializeView();
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("delete_dialog_shown", showConfirmMultipleDeleteDialogShown);
+        outState.putBoolean("clear_all_dialog_shown", showClearAllNotesConfirmationShown);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        //needed to real scenarios
+       /* if (savedInstanceState.getBoolean("delete_dialog_shown")){
+            showConfirmMultipleDeleteDialog();
+        }else if (savedInstanceState.getBoolean("clear_all_dialog_shown")){
+            showClearAllNotesConfirmation();
+        }*/
+    }
+
 
     @Override
     protected void onResume() {
@@ -122,9 +141,9 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
         //toggle this very position
         notesAdapter.toggleSelection(position);
         if (notesAdapter.isSelected(position)) {
-            selectedNotes.add(notesAdapter.get(position));
+            notesViewModel.addToSelectedList(notesAdapter.get(position));
         } else {
-            selectedNotes.remove(notesAdapter.get(position));
+            notesViewModel.removeFromSelectedList(notesAdapter.get(position));
         }
         //check for selected count and toggle contextual menus acc
         if (notesAdapter.getSelectedItemCount() > 0) {
@@ -148,7 +167,7 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
     public void OnNotesDeleted() {
         //called after notes have been deleted from DB
         //remove items from recyclerview
-        for (int i = selectedNotes.size() - 1; i >= 0; i--) {
+        for (int i = notesViewModel.getSelectedNotes().size() - 1; i >= 0; i--) {
             notesAdapter.removeItem(notesAdapter.getSelectedItems().get(i));
         }
         //notesAdapter.removeSelectedItems();
@@ -265,7 +284,7 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
 
     private void animateToolbarIconToDefault() {
         ObjectAnimator.ofFloat(drawerArrowDrawable, "progress", 0).start();
-        selectedNotes.clear();
+        notesViewModel.clearSelectedList();
         Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.app_name));
     }
 
@@ -276,7 +295,7 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
 
     //ui methods related to FAB
     private void onFABClicked() {
-        if (selectedNotes.size() > 0) {
+        if (notesViewModel.getSelectedNotes().size() > 0) {
             //show confirm multiple delete dialog
             showConfirmMultipleDeleteDialog();
         } else {
@@ -287,19 +306,22 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
 
     private void showConfirmMultipleDeleteDialog() {
         Dialog confirmMultipleDeleteDialog = showBeautifiedDialog(this
-                , (selectedNotes.size() == 1)
+                , (notesViewModel.getSelectedNotes().size() == 1)
                         ? getResources().getString(R.string.conf_delete_single_note)
                         : getResources().getString(R.string.conf_delete_multiple_notes)
                 , getResources().getString(R.string.confirm));
         confirmMultipleDeleteDialog.findViewById(R.id.okBtn).setOnClickListener(v -> {
             //user pressed confirm button
-            notesViewModel.deleteSelectedNotes(selectedNotes, this);
+            notesViewModel.deleteSelectedNotes(this);
             confirmMultipleDeleteDialog.dismiss();
         });
+        confirmMultipleDeleteDialog.setOnDismissListener(dialog -> showConfirmMultipleDeleteDialogShown = false);
         confirmMultipleDeleteDialog.show();
+        showConfirmMultipleDeleteDialogShown = true;
     }
 
     private void showClearAllNotesConfirmation() {
+
         Dialog confirmClearNotesDialog = showBeautifiedDialog(this
                 , getResources().getString(R.string.conf_clear_all_notes), getResources().getString(R.string.confirm));
         confirmClearNotesDialog.findViewById(R.id.okBtn).setOnClickListener(v -> {
@@ -310,7 +332,9 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
             setAdapter(new ArrayList<>());
             showToast(this, getResources().getString(R.string.cleared_all_notes));
         });
+        confirmClearNotesDialog.setOnDismissListener(dialog -> showClearAllNotesConfirmationShown = false);
         confirmClearNotesDialog.show();
+        showClearAllNotesConfirmationShown = true;
 
     }
 

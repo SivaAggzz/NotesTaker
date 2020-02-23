@@ -9,6 +9,7 @@ import com.techneapps.notestaking.repositories.NotesRepository;
 import com.techneapps.notestaking.view.listener.OnNoteSavedListener;
 import com.techneapps.notestaking.view.listener.OnNotesDeletedListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NotesViewModel extends ViewModel {
@@ -16,6 +17,8 @@ public class NotesViewModel extends ViewModel {
     private MutableLiveData<List<NoteObj>> noteObjects;
     //Our Repo
     private NotesRepository notesRepository;
+    //Our selected notes
+    private ArrayList<NoteObj> selectedNotes = new ArrayList<>();
 
 
     public NotesViewModel(NotesDatabase notesDatabase) {
@@ -49,13 +52,28 @@ public class NotesViewModel extends ViewModel {
 
 
     //ui methods
-    public void deleteSelectedNotes(List<NoteObj> selectedItems, OnNotesDeletedListener onNotesDeletedListener) {
+    public void deleteSelectedNotes(OnNotesDeletedListener onNotesDeletedListener) {
         //delete from db
-        for (NoteObj noteObj : selectedItems) {
+        for (NoteObj noteObj : selectedNotes) {
             deleteNote(noteObj);
         }
 
         onNotesDeletedListener.OnNotesDeleted();
     }
 
+    public void addToSelectedList(NoteObj noteObj) {
+        selectedNotes.add(noteObj);
+    }
+
+    public void removeFromSelectedList(NoteObj noteObj) {
+        selectedNotes.remove(noteObj);
+    }
+
+    public ArrayList<NoteObj> getSelectedNotes() {
+        return selectedNotes;
+    }
+
+    public void clearSelectedList() {
+        selectedNotes.clear();
+    }
 }
