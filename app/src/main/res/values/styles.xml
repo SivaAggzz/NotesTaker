@@ -58,4 +58,11 @@
         <item name="android:textColorTertiaryInverse">@color/md_grey_300</item>
 
     </style>
+
+    <!-- MyDarkToolbarPopupStyle is toolbar popup theme -->
+    <style name="MyDarkToolbarPopupStyle" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:colorBackground">@color/md_grey_900</item>
+        <!-- textColor is for all menu text colors -->
+        <item name="android:textColor">@color/md_white_1000</item>
+    </style>
 </resources>

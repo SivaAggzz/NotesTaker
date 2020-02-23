@@ -26,6 +26,13 @@ public class SettingsActivity extends AppCompatActivity {
         initializeView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //color NavigationBarColor to match UI
+        getWindow().setNavigationBarColor(getResources().getColor(R.color.md_grey_900));
+    }
+
     private void initializeView() {
         Objects.requireNonNull(getSupportActionBar()).setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
