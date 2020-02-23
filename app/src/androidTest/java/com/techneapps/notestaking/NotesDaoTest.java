@@ -8,6 +8,7 @@ import com.techneapps.notestaking.database.NotesDatabase;
 import com.techneapps.notestaking.database.models.NoteObj;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,20 +35,34 @@ public class NotesDaoTest {
         NoteObj cachedNote = NoteFactory.makeCachedNote();
         notesDatabase.getNotesDao().addNote(cachedNote);
 
-
         List<NoteObj> notes = notesDatabase.getNotesDao().getNotes();
-        assert (notes.size() > 0);
+        Assert.assertSame(notes.size(), 1);
+    }
+
+    @Test
+    public void updateNoteUpdatesData() {
+        NoteObj cachedNote = NoteFactory.makeCachedNoteForUpdate();
+        notesDatabase.getNotesDao().addNote(cachedNote);
+
+        NoteObj retrieved = notesDatabase.getNotesDao().getNoteById(100);
+        retrieved.setTitle("Updated title");
+        retrieved.setContent("Updated content");
+        notesDatabase.getNotesDao().updateNote(retrieved);
+
+        NoteObj retrievedUpdatedNote = notesDatabase.getNotesDao().getNoteById(100);
+        Assert.assertEquals(retrievedUpdatedNote.getTitle(), "Updated title");
+        Assert.assertEquals(retrievedUpdatedNote.getContent(), "Updated content");
     }
 
     @Test
     public void getNotesRetrievesData() {
-        List<NoteObj> cachedNoteList = NoteFactory.makeCachedNoteList(5);
+        List<NoteObj> cachedNoteList = NoteFactory.makeCachedNoteList();
         for (NoteObj noteObj : cachedNoteList) {
             notesDatabase.getNotesDao().addNote(noteObj);
         }
 
-        List<NoteObj> retrievedBufferoos = notesDatabase.getNotesDao().getNotes();
-        assert (retrievedBufferoos == cachedNoteList);
+        List<NoteObj> retrievedNotes = notesDatabase.getNotesDao().getNotes();
+        Assert.assertSame(retrievedNotes.size(), 5);
     }
 
     @Test
@@ -56,6 +71,6 @@ public class NotesDaoTest {
         notesDatabase.getNotesDao().addNote(cachedNote);
 
         notesDatabase.clearAllTables();
-        assert (notesDatabase.getNotesDao().getNotes().isEmpty());
+        Assert.assertSame(notesDatabase.getNotesDao().getNotes().isEmpty(), true);
     }
 }

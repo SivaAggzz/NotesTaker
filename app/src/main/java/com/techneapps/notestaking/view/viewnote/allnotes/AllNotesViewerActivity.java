@@ -152,6 +152,7 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
             notesAdapter.removeItem(notesAdapter.getSelectedItems().get(i));
         }
         //notesAdapter.removeSelectedItems();
+        checkForNoNotesUI();
         showToast(this, getString(R.string.notes_deleted));
         animateToolbarIconToDefault();
         animateFABToAdd();
@@ -230,7 +231,11 @@ public class AllNotesViewerActivity extends AppCompatActivity implements OnSingl
     private void setAdapter(List<NoteObj> noteObjs) {
         notesAdapter = new NotesAdapter(AllNotesViewerActivity.this, noteObjs);
         activityNotesViewerBinding.notesRecyclerView.setAdapter(notesAdapter);
-        if (noteObjs.size() > 0) {
+        checkForNoNotesUI();
+    }
+
+    private void checkForNoNotesUI() {
+        if (notesAdapter.getItemCount() > 0) {
             //hide no notes UI
             activityNotesViewerBinding.noNotesUI.setVisibility(View.GONE);
             activityNotesViewerBinding.notesRecyclerView.setVisibility(View.VISIBLE);

@@ -17,14 +17,21 @@ import java.util.Objects;
 public class SettingsActivity extends AppCompatActivity {
 
     ActivitySettingsBinding activitySettingsBinding;
-
+    private UserPreferenceGetterHelper userPreferenceGetterHelper;
+    private UserPreferenceSetterHelper userPreferenceSetterHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activitySettingsBinding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
+        initializeView();
+    }
+
+    private void initializeView() {
         Objects.requireNonNull(getSupportActionBar()).setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         activitySettingsBinding.enableSaveOnExit.addOnPrefClickListener(this::toggleEnableSaveOnExitPref);
+        userPreferenceGetterHelper = new UserPreferenceGetterHelper(this);
+        userPreferenceSetterHelper = new UserPreferenceSetterHelper(this);
         refreshPrefs();
     }
 
@@ -37,17 +44,17 @@ public class SettingsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     private void toggleEnableSaveOnExitPref() {
-        if (UserPreferenceGetterHelper.isSaveOnExit(this)) {
-            UserPreferenceSetterHelper.setSaveOnExit(this, false);
+        if (userPreferenceGetterHelper.isSaveOnExit()) {
+            userPreferenceSetterHelper.setSaveOnExit(false);
             activitySettingsBinding.enableSaveOnExit.setChecked(false);
         } else {
-            UserPreferenceSetterHelper.setSaveOnExit(this, true);
+            userPreferenceSetterHelper.setSaveOnExit(true);
             activitySettingsBinding.enableSaveOnExit.setChecked(true);
         }
     }
 
     private void refreshPrefs() {
-        activitySettingsBinding.enableSaveOnExit.setChecked(UserPreferenceGetterHelper.isSaveOnExit(this));
+        activitySettingsBinding.enableSaveOnExit.setChecked(userPreferenceGetterHelper.isSaveOnExit());
     }
 
 

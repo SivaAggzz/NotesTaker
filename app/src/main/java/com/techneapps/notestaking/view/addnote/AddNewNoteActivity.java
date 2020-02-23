@@ -29,6 +29,7 @@ public class AddNewNoteActivity extends AppCompatActivity {
     private ActivityAddNewNoteBinding activityAddNewNoteBinding;
     private NotesViewModel notesViewModel;
     private NotesDatabase notesDatabase;
+    private UserPreferenceGetterHelper userPreferenceGetterHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,7 +57,7 @@ public class AddNewNoteActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (UserPreferenceGetterHelper.isSaveOnExit(this)) {
+        if (userPreferenceGetterHelper.isSaveOnExit()) {
             if (validateFieldsWithoutError()) {
                 saveValidatedNoteWithoutPreview();
             }
@@ -76,7 +77,7 @@ public class AddNewNoteActivity extends AppCompatActivity {
         activityAddNewNoteBinding.contentEditTextLayout.requestFocus();
         notesDatabase = Room.databaseBuilder(this, NotesDatabase.class, "notes.db").build();
         initializeViewModels();
-
+        userPreferenceGetterHelper = new UserPreferenceGetterHelper(this);
     }
 
     private void initializeViewModels() {

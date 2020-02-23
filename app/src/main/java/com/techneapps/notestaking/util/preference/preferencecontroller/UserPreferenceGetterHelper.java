@@ -5,7 +5,13 @@ import android.content.Context;
 import com.techneapps.notestaking.util.preference.prefwrapper.PreferenceHelper;
 
 public class UserPreferenceGetterHelper {
-    public static boolean isSaveOnExit(Context context) {
+    private Context context;
+
+    public UserPreferenceGetterHelper(Context context) {
+        this.context = context;
+    }
+
+    public boolean isSaveOnExit() {
         return PreferenceHelper.getBoolean(context, "saveOnExit", false);
     }
 }
