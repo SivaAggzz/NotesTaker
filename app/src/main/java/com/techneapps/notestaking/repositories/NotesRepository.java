@@ -1,7 +1,5 @@
 package com.techneapps.notestaking.repositories;
 
-import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
 
 import com.techneapps.notestaking.database.NotesDatabase;
@@ -35,7 +33,7 @@ public class NotesRepository {
 
     //method to get saved note from Room database by using RXJava
     private MutableLiveData<List<NoteObj>> getAllSavedNotesThread() {
-        Log.e(getClass().getSimpleName(), "getAllSavedNotesThread");
+
         CompositeDisposable compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(Observable.fromCallable(() -> notesDatabase.getNotesDao().getNotes())
                 .subscribeOn(Schedulers.io())
@@ -46,7 +44,7 @@ public class NotesRepository {
 
     //method to delete all saved notes from Room database by using RXJava
     public void clearNotesObjects() {
-        Log.e(getClass().getSimpleName(), "clearNotesObjects");
+
         CompositeDisposable compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(Observable.fromCallable(() -> {
             notesDatabase.clearAllTables();
@@ -60,7 +58,7 @@ public class NotesRepository {
 
     //method to delete a saved note from Room database by using RXJava
     public void deleteNote(NoteObj noteObj) {
-        Log.e(getClass().getSimpleName(), "deleteNote");
+
         CompositeDisposable compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(Observable.fromCallable(() -> {
             notesDatabase.getNotesDao().deleteNote(noteObj);
@@ -74,7 +72,7 @@ public class NotesRepository {
 
     //method to save note to Room database by using RXJava
     public void updateNote(NoteObj noteObj) {
-        Log.e(getClass().getSimpleName(), "updateNote");
+
         CompositeDisposable compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(Observable.fromCallable(() -> {
             notesDatabase.getNotesDao().updateNote(noteObj);
@@ -89,7 +87,7 @@ public class NotesRepository {
 
     //method to add note to Room database by using RXJava
     public void addNote(NoteObj noteObj, OnNoteSavedListener onNoteSavedListener) {
-        Log.e(getClass().getSimpleName(), "addNote");
+
         CompositeDisposable compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(Observable.fromCallable(() -> {
             notesDatabase.getNotesDao().addNote(noteObj);
